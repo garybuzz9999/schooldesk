@@ -177,14 +177,14 @@ tr:hover td{background:#FAFAF8}
 <!-- DIR MODAL -->
 <div id="dm-dir" class="dm hidden">
   <div class="dm-box" style="max-width:320px">
-    <div class="dm-title">Директор <span style="cursor:pointer;font-size:18px;color:var(--t3)" onclick="closeDm('dm-dir')">✕</span></div>
+    <div class="dm-title">Директор <span style="cursor:pointer;font-size:18px;color:var(--t3)" id="dm-dir-close">✕</span></div>
     <div class="lf">
       <div class="f"><label>Email</label><input type="email" id="de" class="fw" placeholder="director@school.ua"></div>
-      <div class="f"><label>Пароль</label><input type="password" id="dp" class="fw" onkeydown="if(event.key==='Enter')doDirLogin()"></div>
+      <div class="f"><label>Пароль</label><input type="password" id="dp" class="fw" id="dp"></div>
     </div>
     <div class="fx">
-      <button class="btn btn-gh" style="flex:1;justify-content:center" onclick="closeDm('dm-dir')">Скасувати</button>
-      <button class="btn btn-pr" style="flex:1;justify-content:center" onclick="doDirLogin()">Увійти</button>
+      <button class="btn btn-gh" style="flex:1;justify-content:center" id="dm-dir-cancel">Скасувати</button>
+      <button class="btn btn-pr" style="flex:1;justify-content:center" id="dm-dir-submit">Увійти</button>
     </div>
     <div class="le" id="de-err"></div>
   </div>
@@ -214,6 +214,22 @@ tr:hover td{background:#FAFAF8}
   <button class="mb-out hidden" id="mb-out" onclick="doLogout()">Вийти</button>
 </div>
 
+
+<!-- Bridge: expose module functions to global scope for inline handlers -->
+<script>
+// These will be populated by the module
+window._bridge = {};
+['setRole','doLogin','doLogout','closeDm','doDirLogin','go',
+ 'addTS','addTSOwn','removeTS','addTC','removeTC','saveTeacher',
+ 'toggleT','delT','openTeacherModal','saveTeacherModal',
+ 'saveStudent','delSt','filterSt','hAddStudent','hDelStudent',
+ 'addLesson','cycleAtt','setGrade'].forEach(fn=>{
+  window[fn]=function(){
+    if(window._bridge[fn]) return window._bridge[fn].apply(this,arguments);
+    console.warn('Function not ready:',fn);
+  };
+});
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
@@ -320,6 +336,10 @@ window.doLogin=async()=>{
 };
 
 document.getElementById('adm-lnk').addEventListener('click',()=>openDm('dm-dir'));
+document.getElementById('dm-dir-close').addEventListener('click',()=>closeDm('dm-dir'));
+document.getElementById('dm-dir-cancel').addEventListener('click',()=>closeDm('dm-dir'));
+document.getElementById('dm-dir-submit').addEventListener('click',()=>doDirLogin());
+document.getElementById('dp').addEventListener('keydown',e=>{if(e.key==='Enter')doDirLogin();});
 function openDm(id){document.getElementById(id).classList.remove('hidden');}
 window.closeDm=id=>document.getElementById(id).classList.add('hidden');
 
@@ -848,6 +868,15 @@ async function pAtt(mc){
     </div>`;
   });
 }
+
+// Register all window functions to bridge so inline handlers work
+['setRole','doLogin','doLogout','closeDm','doDirLogin','go',
+ 'addTS','addTSOwn','removeTS','addTC','removeTC','saveTeacher',
+ 'toggleT','delT','openTeacherModal','saveTeacherModal',
+ 'saveStudent','delSt','filterSt','hAddStudent','hDelStudent',
+ 'addLesson','cycleAtt','setGrade'].forEach(fn=>{
+  if(window[fn]) window._bridge[fn]=window[fn];
+});
 </script>
 </body>
 </html>
