@@ -129,7 +129,13 @@ tr:hover td{background:#FAFAF8}
 /* deactivated row */
 .row-inactive td{opacity:.5}
 .row-inactive td:first-child::after{content:'деактивовано';display:block;font-size:10px;color:var(--red);font-weight:500}
-@media(max-width:700px){.sidebar{display:none}.main{padding:16px}.sg{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}}
+@media(max-width:700px){.sidebar{display:none}.main{padding:16px 16px 80px}.sg{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}}
+.mb-nav{display:none}
+@media(max-width:700px){.mb-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:50;padding:4px 0 6px}
+.mb-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;font-size:10px;font-weight:500;color:var(--text-3);background:none;border:none;cursor:pointer;font-family:inherit}
+.mb-nav button.active{color:var(--accent)}
+.mb-nav .mb-ico{font-size:20px;line-height:1}
+.mb-logout{position:fixed;top:12px;right:12px;z-index:51;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:6px 12px;font-size:12px;color:var(--text-2);cursor:pointer;font-family:inherit}}
 </style>
 </head>
 <body>
@@ -179,6 +185,8 @@ tr:hover td{background:#FAFAF8}
 </div>
 
 <div id="pg-app" class="layout hidden">
+<div class="mb-nav" id="mb-nav"></div>
+<button class="mb-logout hidden" id="mb-logout-btn" onclick="doLogout()">Вийти</button>
   <aside class="sidebar">
     <div class="sb-logo"><div class="sn">SchoolDesk</div><div class="ss">Електронний журнал</div></div>
     <div class="sb-user">
@@ -239,9 +247,17 @@ onAuthStateChanged(auth, async user=>{
       if(sn.exists()){
         session={role:sn.data().role, uid:user.uid, profile:sn.data()};
         showApp();
-      } else { await signOut(auth); showLogin(); }
+      } else {
+    buildMbNav([
+      {id:"p-home",ico:"📊",lbl:"Оцінки"},
+      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
+    ]); await signOut(auth); showLogin(); }
     }catch(e){ await signOut(auth); showLogin(); }
-  } else { showLogin(); }
+  } else {
+    buildMbNav([
+      {id:"p-home",ico:"📊",lbl:"Оцінки"},
+      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
+    ]); showLogin(); }
   ld(false);
 });
 
@@ -258,6 +274,10 @@ window.setRole=(role,btn)=>{
     document.getElementById('li-pass').type='text';
     document.getElementById('li-pass').placeholder='напр. AA1111';
   } else {
+    buildMbNav([
+      {id:"p-home",ico:"📊",lbl:"Оцінки"},
+      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
+    ]);
     pw.style.display='';
     pl.textContent='Пароль';
     document.getElementById('li-pass').type='password';
@@ -276,6 +296,10 @@ window.doLogin=async()=>{
       const email=phoneToEmail(phone);
       await signInWithEmailAndPassword(auth,email,pass);
     } else {
+    buildMbNav([
+      {id:"p-home",ico:"📊",lbl:"Оцінки"},
+      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
+    ]);
       const sid=(document.getElementById('li-pass').value||'').trim().toUpperCase();
       if(!sid){err('li-err','Введіть ID учня');btn.disabled=false;return;}
       const q=query(collection(db,'students'),where('sid','==',sid));
@@ -321,6 +345,16 @@ function showApp(){
   go(r==='director'?'d-stats':r==='teacher'?'journal':'p-home');
 }
 
+function buildMbNav(pages){
+  const mn=document.getElementById("mb-nav");
+  const ml=document.getElementById("mb-logout-btn");
+  if(!mn)return;
+  mn.innerHTML=pages.map(p=>`<button data-p="${p.id}" onclick="go('${p.id}')">
+    <span class="mb-ico">${p.ico}</span><span>${p.lbl}</span>
+  </button>`).join("");
+  ml.classList.remove("hidden");
+}
+
 function buildSb(){
   const r=session.role, p=session.profile;
   const av=document.getElementById('sb-av');
@@ -329,16 +363,29 @@ function buildSb(){
   document.getElementById('sb-nm').textContent=p.name||p.phone||p.email||'—';
   document.getElementById('sb-rl').textContent=r==='director'?'Директор':r==='teacher'?'Вчитель':`Клас ${p.classId||''}`;
   const nav=document.getElementById('sb-nav');
-  if(r==='director'){
+  if(r==="director"){
+    buildMbNav([
+      {id:"d-stats",ico:"📊",lbl:"Огляд"},
+      {id:"d-teachers",ico:"👩200d🏫",lbl:"Вчителі"},
+      {id:"d-students",ico:"🎒",lbl:"Учні"}
+    ]);
     nav.innerHTML=`
       <button class="ni" data-p="d-stats" onclick="go('d-stats')">📊 Огляд</button>
       <button class="ni" data-p="d-teachers" onclick="go('d-teachers')">👩‍🏫 Вчителі</button>
       <button class="ni" data-p="d-students" onclick="go('d-students')">🎒 Учні</button>`;
-  } else if(r==='teacher'){
+  } else if(r==="teacher"){
+    buildMbNav([
+      {id:"journal",ico:"📒",lbl:"Журнал"},
+      {id:"t-profile",ico:"👤",lbl:"Профіль"}
+    ]);
     nav.innerHTML=`
       <button class="ni" data-p="journal" onclick="go('journal')">📒 Журнал</button>
       <button class="ni" data-p="t-profile" onclick="go('t-profile')">👤 Профіль</button>`;
   } else {
+    buildMbNav([
+      {id:"p-home",ico:"📊",lbl:"Оцінки"},
+      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
+    ]);
     nav.innerHTML=`
       <button class="ni" data-p="p-home" onclick="go('p-home')">📊 Успішність</button>
       <button class="ni" data-p="p-att" onclick="go('p-att')">✅ Відвідуваність</button>`;
@@ -346,6 +393,7 @@ function buildSb(){
 }
 
 window.go=page=>{
+  document.querySelectorAll(".mb-nav button").forEach(b=>b.classList.toggle("active",b.dataset.p===page));
   document.querySelectorAll('.ni').forEach(b=>b.classList.toggle('active',b.dataset.p===page));
   const mc=document.getElementById('mc');
   mc.innerHTML='<div class="es"><div class="sp"></div></div>';
