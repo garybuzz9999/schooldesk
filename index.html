@@ -319,10 +319,7 @@ window.doLogin=async()=>{
   }
 };
 
-let dblTap=0;
-document.getElementById('adm-lnk').addEventListener('click',()=>{
-  dblTap++;if(dblTap>=2){dblTap=0;openDm('dm-dir');}setTimeout(()=>dblTap=0,600);
-});
+document.getElementById('adm-lnk').addEventListener('click',()=>openDm('dm-dir'));
 function openDm(id){document.getElementById(id).classList.remove('hidden');}
 window.closeDm=id=>document.getElementById(id).classList.add('hidden');
 
