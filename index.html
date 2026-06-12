@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Електронний журнал</title>
+<style>
+:root {
+  --bg: #F7F6F3;
+  --surface: #FFFFFF;
+  --border: #E4E2DC;
+  --border-strong: #C8C5BC;
+  --text: #1A1917;
+  --text-2: #6B6860;
+  --text-3: #9E9C96;
+  --accent: #2D5BE3;
+  --accent-bg: #EEF2FD;
+  --accent-text: #1A3A9F;
+  --green: #1A7F4B;
+  --green-bg: #E8F7EF;
+  --red: #C0392B;
+  --red-bg: #FDECEA;
+  --amber: #A05C00;
+  --amber-bg: #FEF3E2;
+  --purple: #5B35C5;
+  --purple-bg: #F0ECFD;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── Layout ── */
+.layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.main { flex: 1; overflow-y: auto; padding: 28px 32px; max-width: 960px; }
+
+/* ── Sidebar ── */
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .school-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.sidebar-logo .school-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.sidebar-user {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; flex-shrink: 0;
+}
+.av-dir { background: var(--purple-bg); color: var(--purple); }
+.av-tch { background: var(--green-bg); color: var(--green); }
+.av-par { background: var(--accent-bg); color: var(--accent-text); }
+.sidebar-user-info { flex: 1; min-width: 0; }
+.sidebar-user-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-user-role { font-size: 11px; color: var(--text-3); }
+.sidebar-nav { flex: 1; padding: 8px 0; overflow-y: auto; }
+.nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 20px;
+  font-size: 13px; color: var(--text-2);
+  cursor: pointer; border: none; background: none;
+  width: 100%; text-align: left;
+  border-left: 2px solid transparent;
+  transition: background .12s;
+}
+.nav-item:hover { background: var(--bg); color: var(--text); }
+.nav-item.active { background: var(--accent-bg); color: var(--accent); font-weight: 500; border-left-color: var(--accent); }
+.nav-icon { font-size: 15px; width: 18px; text-align: center; }
+.sidebar-footer { padding: 12px 20px; border-top: 1px solid var(--border); }
+.btn-logout {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text-3); cursor: pointer;
+  background: none; border: none; padding: 0;
+}
+.btn-logout:hover { color: var(--red); }
+
+/* ── Page header ── */
+.page-header { margin-bottom: 24px; }
+.page-title { font-size: 20px; font-weight: 600; color: var(--text); }
+.page-sub { font-size: 13px; color: var(--text-2); margin-top: 3px; }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+.card-body { padding: 20px 24px; }
+.card + .card { margin-top: 12px; }
+
+/* ── Stats ── */
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.stat-val { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+.stat-lbl { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+/* ── Forms ── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 12px; font-weight: 500; color: var(--text-2); }
+input, select, textarea {
+  font-family: inherit; font-size: 13px; color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0 10px; height: 36px;
+  transition: border-color .12s;
+}
+input:focus, select:focus { outline: none; border-color: var(--accent); background: #fff; }
+input::placeholder { color: var(--text-3); }
+.full-w { width: 100%; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 14px; height: 36px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: 1px solid transparent; transition: opacity .12s;
+}
+.btn:hover { opacity: .85; }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-success { background: var(--green); color: #fff; }
+.btn-danger { background: var(--red-bg); color: var(--red); border-color: #f5c0bb; }
+.btn-ghost { background: transparent; color: var(--text-2); border-color: var(--border); }
+.btn-ghost:hover { background: var(--bg); }
+.btn-sm { height: 28px; padding: 0 10px; font-size: 12px; }
+
+/* ── Tables ── */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  font-size: 11px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .04em;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  text-align: left; white-space: nowrap; background: var(--bg);
+}
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #FAFAF8; }
+
+/* ── Badges/tags ── */
+.tag {
+  display: inline-block; font-size: 11px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px;
+}
+.tag-subj { background: var(--green-bg); color: var(--green); }
+.tag-rate { background: var(--amber-bg); color: var(--amber); }
+.tag-id { background: var(--accent-bg); color: var(--accent-text); font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; letter-spacing: .04em; }
+.tag-cls { background: var(--purple-bg); color: var(--purple); }
+.tag-dir { background: var(--purple-bg); color: var(--purple); }
+.tag-tch { background: var(--green-bg); color: var(--green); }
+.tag-par { background: var(--accent-bg); color: var(--accent-text); }
+.badge-ok { background: var(--green-bg); color: var(--green); padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-abs { background: var(--red-bg); color: var(--red); padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+.badge-neu { background: var(--bg); color: var(--text-3); padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+
+/* ── Grade badge ── */
+.grade-b { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; font-size: 13px; font-weight: 700; }
+.gb-12,.gb-11,.gb-10 { background: var(--green-bg); color: var(--green); }
+.gb-9,.gb-8,.gb-7 { background: var(--accent-bg); color: var(--accent-text); }
+.gb-6,.gb-5,.gb-4 { background: var(--amber-bg); color: var(--amber); }
+.gb-3,.gb-2,.gb-1 { background: var(--red-bg); color: var(--red); }
+
+/* ── Journal table ── */
+.jnl-table th.lesson-th { text-align: center; min-width: 52px; }
+.jnl-table td.lesson-td { text-align: center; }
+.att-toggle {
+  width: 28px; height: 22px; border-radius: 4px;
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text-3); display: inline-flex; align-items: center; justify-content: center;
+  transition: background .1s;
+}
+.att-p { background: var(--green-bg); color: var(--green); border-color: #b2e2c8; }
+.att-a { background: var(--red-bg); color: var(--red); border-color: #f5c0bb; }
+.grade-inp {
+  width: 38px; height: 22px; font-size: 12px; padding: 0; text-align: center;
+  border: 1px solid var(--border); border-radius: 4px; margin-top: 2px;
+  background: var(--bg);
+}
+.grade-inp:focus { border-color: var(--accent); }
+
+/* ── Avg ── */
+.avg-v12,.avg-v11,.avg-v10 { color: var(--green); font-weight: 700; }
+.avg-v9,.avg-v8,.avg-v7 { color: var(--accent); font-weight: 600; }
+.avg-v6,.avg-v5,.avg-v4 { color: var(--amber); font-weight: 600; }
+.avg-v3,.avg-v2,.avg-v1 { color: var(--red); font-weight: 600; }
+
+/* ── Login ── */
+.login-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+}
+.login-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 36px 40px;
+  width: 100%; max-width: 380px; box-shadow: var(--shadow);
+}
+.login-logo { text-align: center; margin-bottom: 8px; font-size: 32px; }
+.login-title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 4px; }
+.login-sub { font-size: 13px; color: var(--text-3); text-align: center; margin-bottom: 28px; }
+.login-fields { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.login-err { font-size: 12px; color: var(--red); text-align: center; min-height: 18px; margin-top: 4px; }
+.role-tabs { display: flex; gap: 4px; background: var(--bg); border-radius: var(--radius); padding: 3px; margin-bottom: 20px; }
+.role-tab {
+  flex: 1; padding: 6px 4px; font-size: 12px; font-weight: 500;
+  border: none; background: none; border-radius: 6px;
+  cursor: pointer; color: var(--text-3); transition: all .12s;
+}
+.role-tab.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+
+/* ── Parent view ── */
+.subject-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.lesson-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.lesson-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 3px 8px; font-size: 12px;
+}
+.chip-att { font-size: 10px; }
+
+/* ── Utility ── */
+.flex { display: flex; align-items: center; }
+.flex-gap { display: flex; align-items: center; gap: 8px; }
+.flex-wrap { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.mt8 { margin-top: 8px; }
+.mt12 { margin-top: 12px; }
+.mt16 { margin-top: 16px; }
+.mt20 { margin-top: 20px; }
+.mb8 { margin-bottom: 8px; }
+.mb12 { margin-bottom: 12px; }
+.mb16 { margin-bottom: 16px; }
+.hidden { display: none !important; }
+.text-muted { font-size: 12px; color: var(--text-3); }
+.text-sm { font-size: 12px; }
+.fw5 { font-weight: 500; }
+.empty-state { padding: 40px; text-align: center; color: var(--text-3); font-size: 13px; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.section-label { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.chip-del { cursor: pointer; color: var(--text-3); font-size: 12px; margin-left: 2px; }
+.chip-del:hover { color: var(--red); }
+
+/* ── Alert ── */
+.alert { padding: 10px 14px; border-radius: var(--radius); font-size: 13px; margin-top: 12px; }
+.alert-success { background: var(--green-bg); color: var(--green); }
+.alert-error { background: var(--red-bg); color: var(--red); }
+
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+  .main { padding: 16px; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="page-login" class="login-page">
+  <div class="login-box">
+    <div class="login-logo">🏫</div>
+    <div class="login-title">Електронний журнал</div>
+    <div class="login-sub">Школа №7</div>
+    <div class="role-tabs" id="role-tabs">
+      <button class="role-tab active" onclick="setLoginRole('teacher',this)">Вчитель</button>
+      <button class="role-tab" onclick="setLoginRole('parent',this)">Батьки</button>
+    </div>
+    <div class="login-fields">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="li-email" placeholder="ваш@email.com" class="full-w">
+      </div>
+      <div class="field">
+        <label id="li-pass-lbl">Пароль</label>
+        <input type="password" id="li-pass" placeholder="••••••••" class="full-w" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+    </div>
+    <button class="btn btn-primary full-w" style="width:100%;justify-content:center" onclick="doLogin()">Увійти →</button>
+    <div class="login-err" id="li-err"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ APP ═══════════════ -->
+<div id="page-app" class="layout hidden">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="school-name">Школа №7</div>
+      <div class="school-sub">Електронний журнал</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar" id="sb-avatar"></div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sb-name">—</div>
+        <div class="sidebar-user-role" id="sb-role">—</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="logout()">
+        <span>⬡</span> Вийти
+      </button>
+    </div>
+  </aside>
+  <main class="main" id="main-content"></main>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// DATA STORE
+// ═══════════════════════════════════════
+const KEY = 'ej_db_v3';
+const CLASSES = ['1-А','1-Б','2-А','2-Б','3-А','3-Б','4-А','4-Б',
+  '5-А','5-Б','6-А','6-Б','7-А','7-Б','8-А','8-Б',
+  '9-А','9-Б','10-А','10-Б','11-А','11-Б'];
+const ALL_SUBJS = ['Математика','Алгебра','Геометрія','Українська мова',
+  'Українська література','Англійська мова','Фізика','Хімія','Біологія',
+  'Географія','Історія України','Всесвітня історія','Інформатика',
+  'Фізкультура','Музика','Образотворче мистецтво','Правознавство'];
+
+let DB = {
+  director: { pass: 'admin123' },
+  teachers: [],
+  students: [],
+  lessons: {}
+};
+
+function loadDB() {
+  try { const r = localStorage.getItem(KEY); if (r) DB = JSON.parse(r); } catch(e) {}
+  if (!DB.director) DB.director = { pass: 'admin123' };
+}
+function saveDB() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch(e) {} }
+
+function uid() { return Math.random().toString(36).slice(2, 9).toUpperCase(); }
+function initials(n) { return (n||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase() || '?'; }
+function avgGrades(arr) {
+  const g = arr.filter(x => x > 0);
+  return g.length ? (g.reduce((a,b)=>a+b,0)/g.length).toFixed(1) : null;
+}
+function avgClass(v) {
+  if (!v) return '';
+  const n = parseFloat(v);
+  return n >= 10 ? 'avg-v12' : n >= 7 ? 'avg-v9' : n >= 4 ? 'avg-v6' : 'avg-v3';
+}
+function gradeCls(g) { return `gb-${g}`; }
+
+// ═══════════════════════════════════════
+// SESSION
+// ═══════════════════════════════════════
+let session = null;
+let loginRole = 'teacher';
+let tempSubjects = [];
+
+function setLoginRole(role, btn) {
+  loginRole = role;
+  document.querySelectorAll('.role-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const lbl = document.getElementById('li-pass-lbl');
+  if (role === 'parent') lbl.textContent = 'ID учня (отримано від директора)';
+  else lbl.textContent = 'Пароль';
+  document.getElementById('li-email').style.display = role === 'parent' ? 'none' : '';
+  document.getElementById('li-err').textContent = '';
+}
+
+function doLogin() {
+  const email = (document.getElementById('li-email').value || '').trim().toLowerCase();
+  const pass = (document.getElementById('li-pass').value || '').trim();
+  const err = document.getElementById('li-err');
+  err.textContent = '';
+
+  if (loginRole === 'teacher') {
+    const t = DB.teachers.find(x => x.email === email && x.pass === pass);
+    if (!t) { err.textContent = 'Невірний email або пароль'; return; }
+    session = { role: 'teacher', teacher: t };
+  } else {
+    const sid = pass.toUpperCase();
+    const s = DB.students.find(x => x.sid === sid);
+    if (!s) { err.textContent = 'Учня з таким ID не знайдено'; return; }
+    session = { role: 'parent', student: s };
+  }
+  showApp();
+}
+
+function logout() {
+  session = null;
+  document.getElementById('page-app').classList.add('hidden');
+  document.getElementById('page-login').classList.remove('hidden');
+  document.getElementById('li-email').value = '';
+  document.getElementById('li-pass').value = '';
+  document.getElementById('li-err').textContent = '';
+}
+
+// ═══════════════════════════════════════
+// APP SHELL
+// ═══════════════════════════════════════
+function showApp() {
+  document.getElementById('page-login').classList.add('hidden');
+  document.getElementById('page-app').classList.remove('hidden');
+  buildSidebar();
+  navigateTo(session.role === 'teacher' ? 'journal' : 'parent-home');
+}
+
+function buildSidebar() {
+  const r = session.role;
+  const avEl = document.getElementById('sb-avatar');
+  const nameEl = document.getElementById('sb-name');
+  const roleEl = document.getElementById('sb-role');
+  const nav = document.getElementById('sidebar-nav');
+
+  if (r === 'teacher') {
+    avEl.textContent = initials(session.teacher.name);
+    avEl.className = 'avatar av-tch';
+    nameEl.textContent = session.teacher.name;
+    roleEl.textContent = 'Вчитель';
+    nav.innerHTML = `
+      <button class="nav-item" data-page="journal" onclick="navigateTo('journal')">
+        <span class="nav-icon">📒</span> Журнал
+      </button>
+      <button class="nav-item" data-page="teacher-profile" onclick="navigateTo('teacher-profile')">
+        <span class="nav-icon">👤</span> Профіль
+      </button>`;
+  } else {
+    avEl.textContent = initials(session.student.name);
+    avEl.className = 'avatar av-par';
+    nameEl.textContent = session.student.name;
+    roleEl.textContent = `Клас ${session.student.classId}`;
+    nav.innerHTML = `
+      <button class="nav-item" data-page="parent-home" onclick="navigateTo('parent-home')">
+        <span class="nav-icon">📊</span> Успішність
+      </button>
+      <button class="nav-item" data-page="parent-attendance" onclick="navigateTo('parent-attendance')">
+        <span class="nav-icon">✅</span> Відвідуваність
+      </button>`;
+  }
+}
+
+function navigateTo(page) {
+  document.querySelectorAll('.nav-item').forEach(b => {
+    b.classList.toggle('active', b.dataset.page === page);
+  });
+  const mc = document.getElementById('main-content');
+  if (page === 'journal') renderJournal(mc);
+  else if (page === 'teacher-profile') renderTeacherProfile(mc);
+  else if (page === 'parent-home') renderParentHome(mc);
+  else if (page === 'parent-attendance') renderParentAttendance(mc);
+}
+
+// ═══════════════════════════════════════
+// TEACHER: JOURNAL
+// ═══════════════════════════════════════
+let jState = { subjIdx: 0, classId: '' };
+
+function renderJournal(mc) {
+  const t = DB.teachers.find(x => x.id === session.teacher.id) || session.teacher;
+  session.teacher = t;
+  const subjs = t.subjects || [];
+
+  if (!subjs.length) {
+    mc.innerHTML = `<div class="page-header"><h1 class="page-title">Журнал</h1></div>
+      <div class="card"><div class="empty-state">У вашому профілі немає предметів.<br>Зверніться до директора.</div></div>`;
+    return;
+  }
+
+  if (!jState.classId) jState.classId = CLASSES[0];
+
+  const subjOpts = subjs.map((s, i) =>
+    `<option value="${i}" ${i===jState.subjIdx?'selected':''}>${s.name}</option>`).join('');
+  const classOpts = CLASSES.map(c =>
+    `<option value="${c}" ${c===jState.classId?'selected':''}>${c}</option>`).join('');
+
+  const curSubj = subjs[jState.subjIdx];
+  const students = DB.students.filter(s => s.classId === jState.classId)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const lKey = (n) => `${t.id}__${jState.classId}__${curSubj.id}__${n}`;
+  const lessonKeys = Object.keys(DB.lessons)
+    .filter(k => k.startsWith(`${t.id}__${jState.classId}__${curSubj.id}__`))
+    .sort((a, b) => DB.lessons[a].num - DB.lessons[b].num);
+  const lessons = lessonKeys.map(k => DB.lessons[k]);
+
+  let tableHtml = '';
+  if (!students.length) {
+    tableHtml = `<div class="empty-state">У класі ${jState.classId} ще немає учнів.<br>Попросіть директора додати учнів.</div>`;
+  } else if (!lessons.length) {
+    tableHtml = `<div class="empty-state">Немає уроків. Натисніть «+ Урок» щоб додати перший.</div>`;
+  } else {
+    tableHtml = `<div class="tbl-wrap"><table class="jnl-table">
+      <thead><tr>
+        <th style="min-width:180px">Учень</th>
+        ${lessons.map(l => `<th class="lesson-th">
+          <div style="font-size:11px">№${l.num}</div>
+          <div style="font-size:10px;font-weight:400;color:var(--text-3)">${(l.date||'').slice(5)}</div>
+        </th>`).join('')}
+        <th style="text-align:center">Сер.</th>
+      </tr></thead>
+      <tbody>
+      ${students.map(s => {
+        const grades = [];
+        const cells = lessons.map(l => {
+          const e = (l.entries||[]).find(x => x.studentId === s.id);
+          const att = e ? e.att : null;
+          const grade = e ? (e.grade || 0) : 0;
+          if (grade > 0) grades.push(grade);
+          const attL = att === 'p' ? 'П' : att === 'a' ? 'Н' : '·';
+          const attC = att === 'p' ? 'att-p' : att === 'a' ? 'att-a' : '';
+          return `<td class="lesson-td">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+              <button class="att-toggle ${attC}" onclick="cycleAtt('${l.num}','${s.id}','${t.id}','${jState.classId}','${curSubj.id}')">${attL}</button>
+              <input class="grade-inp" type="number" min="1" max="12"
+                value="${grade > 0 ? grade : ''}" placeholder="—"
+                onchange="setGrade(this,'${l.num}','${s.id}','${t.id}','${jState.classId}','${curSubj.id}')">
+            </div>
+          </td>`;
+        }).join('');
+        const avg = avgGrades(grades);
+        const avgCl = avgClass(avg);
+        return `<tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="avatar av-par" style="width:28px;height:28px;font-size:10px">${initials(s.name)}</div>
+              <span class="fw5">${s.name}</span>
+            </div>
+          </td>
+          ${cells}
+          <td style="text-align:center">
+            ${avg ? `<span class="${avgCl}" style="font-size:14px">${avg}</span>` : '—'}
+          </td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table></div>`;
+  }
+
+  mc.innerHTML = `
+    <div class="page-header">
+      <h1 class="page-title">Журнал</h1>
+      <p class="page-sub">${t.name}</p>
+    </div>
+    <div class="card card-body mb12">
+      <div class="flex-wrap" style="gap:12px">
+        <div class="field">
+          <label>Предмет</label>
+          <select onchange="jState.subjIdx=parseInt(this.value);renderJournal(document.getElementById('main-content'))">${subjOpts}</select>
+        </div>
+        <div class="field">
+          <label>Клас</label>
+          <select onchange="jState.classId=this.value;renderJournal(document.getElementById('main-content'))">${classOpts}</select>
+        </div>
+        <div style="margin-top:auto">
+          <button class="btn btn-success" onclick="addLesson()">+ Урок</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">${tableHtml}</div>`;
+}
+
+function lKey(teacherId, classId, subjId, num) {
+  return `${teacherId}__${classId}__${subjId}__${num}`;
+}
+
+function addLesson() {
+  const t = session.teacher;
+  const subj = t.subjects[jState.subjIdx];
+  const prefix = `${t.id}__${jState.classId}__${subj.id}__`;
+  const existing = Object.keys(DB.lessons).filter(k => k.startsWith(prefix));
+  const num = existing.length + 1;
+  const key = lKey(t.id, jState.classId, subj.id, num);
+  DB.lessons[key] = { num, date: new Date().toISOString().slice(0,10),
+    teacherId: t.id, classId: jState.classId, subjectId: subj.id, entries: [] };
+  saveDB();
+  renderJournal(document.getElementById('main-content'));
+}
+
+function ensureEntry(key, studentId) {
+  const l = DB.lessons[key];
+  if (!l.entries) l.entries = [];
+  let e = l.entries.find(x => x.studentId === studentId);
+  if (!e) { e = { studentId, att: null, grade: 0 }; l.entries.push(e); }
+  return e;
+}
+
+function cycleAtt(num, studentId, teacherId, classId, subjId) {
+  const key = lKey(teacherId, classId, subjId, num);
+  const e = ensureEntry(key, studentId);
+  e.att = e.att === null ? 'p' : e.att === 'p' ? 'a' : null;
+  saveDB();
+  renderJournal(document.getElementById('main-content'));
+}
+
+function setGrade(inp, num, studentId, teacherId, classId, subjId) {
+  const key = lKey(teacherId, classId, subjId, num);
+  const e = ensureEntry(key, studentId);
+  const v = parseInt(inp.value);
+  e.grade = (v >= 1 && v <= 12) ? v : 0;
+  if (e.grade === 0) inp.value = '';
+  saveDB();
+  renderJournal(document.getElementById('main-content'));
+}
+
+// ═══════════════════════════════════════
+// TEACHER: PROFILE
+// ═══════════════════════════════════════
+function renderTeacherProfile(mc) {
+  const t = DB.teachers.find(x => x.id === session.teacher.id);
+  mc.innerHTML = `
+    <div class="page-header">
+      <h1 class="page-title">Мій профіль</h1>
+    </div>
+    <div class="card card-body">
+      <div class="flex-gap mb16">
+        <div class="avatar av-tch" style="width:48px;height:48px;font-size:16px">${initials(t.name)}</div>
+        <div>
+          <div style="font-size:16px;font-weight:600">${t.name}</div>
+          <div class="text-muted">${t.email} &nbsp;·&nbsp; <span class="tag tag-rate">${t.rate} ставки</span></div>
+        </div>
+      </div>
+      <hr class="divider">
+      <div class="section-label">Предмети</div>
+      <div class="flex-wrap mb16">
+        ${(t.subjects||[]).map(s=>`<span class="tag tag-subj">${s.name}</span>`).join('') || '<span class="text-muted">Немає предметів</span>'}
+      </div>
+      <hr class="divider">
+      <div class="section-label">Зміна пароля</div>
+      <div class="form-grid" style="max-width:400px">
+        <div class="field"><label>Поточний пароль</label><input type="password" id="pr-old" class="full-w"></div>
+        <div class="field"><label>Новий пароль</label><input type="password" id="pr-new" class="full-w"></div>
+      </div>
+      <div class="mt12">
+        <button class="btn btn-primary" onclick="changeTeacherPass()">Зберегти пароль</button>
+      </div>
+      <div id="prof-msg"></div>
+    </div>`;
+}
+
+function changeTeacherPass() {
+  const old = document.getElementById('pr-old').value;
+  const nw = document.getElementById('pr-new').value;
+  const msg = document.getElementById('prof-msg');
+  const t = DB.teachers.find(x => x.id === session.teacher.id);
+  if (old !== t.pass) { msg.innerHTML = '<div class="alert alert-error">Невірний поточний пароль</div>'; return; }
+  if (!nw) { msg.innerHTML = '<div class="alert alert-error">Введіть новий пароль</div>'; return; }
+  t.pass = nw; saveDB();
+  msg.innerHTML = '<div class="alert alert-success">Пароль змінено</div>';
+}
+
+// ═══════════════════════════════════════
+// PARENT: HOME (grades)
+// ═══════════════════════════════════════
+function getStudentSubjects(sid) {
+  const s = DB.students.find(x => x.id === sid);
+  if (!s) return [];
+  const result = [];
+  DB.teachers.forEach(t => {
+    (t.subjects||[]).forEach(subj => {
+      const prefix = `${t.id}__${s.classId}__${subj.id}__`;
+      const keys = Object.keys(DB.lessons).filter(k => k.startsWith(prefix)).sort((a,b) => DB.lessons[a].num - DB.lessons[b].num);
+      if (!keys.length) return;
+      const rows = keys.map(k => {
+        const l = DB.lessons[k];
+        const e = (l.entries||[]).find(x => x.studentId === sid);
+        return { num: l.num, date: l.date, att: e ? e.att : null, grade: e ? (e.grade||0) : 0 };
+      });
+      const grades = rows.map(r => r.grade).filter(g => g > 0);
+      result.push({ teacherName: t.name, subjectName: subj.name, rows, avg: avgGrades(grades) });
+    });
+  });
+  return result;
+}
+
+function renderParentHome(mc) {
+  const s = session.student;
+  const subjects = getStudentSubjects(s.id);
+
+  mc.innerHTML = `
+    <div class="page-header">
+      <h1 class="page-title">Успішність</h1>
+      <p class="page-sub">${s.name} &nbsp;·&nbsp; Клас ${s.classId} &nbsp;·&nbsp; ID: <span class="tag tag-id">${s.sid}</span></p>
+    </div>`;
+
+  if (!subjects.length) {
+    mc.innerHTML += `<div class="card"><div class="empty-state">Вчителі ще не заповнили журнал.</div></div>`;
+    return;
+  }
+
+  subjects.forEach(subj => {
+    const avgCl = avgClass(subj.avg);
+    const gradesOnly = subj.rows.filter(r => r.grade > 0);
+    mc.innerHTML += `
+      <div class="card card-body mb12">
+        <div class="flex-between mb12">
+          <div>
+            <span style="font-size:15px;font-weight:600">${subj.subjectName}</span>
+            <span class="text-muted" style="margin-left:8px">${subj.teacherName}</span>
+          </div>
+          ${subj.avg ? `<span class="${avgCl}" style="font-size:20px;font-weight:700">${subj.avg}</span>` : ''}
+        </div>
+        <div class="flex-wrap">
+          ${gradesOnly.map(r => `
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+              <span class="text-muted" style="font-size:10px">№${r.num}</span>
+              <span class="grade-b ${gradeCls(r.grade)}">${r.grade}</span>
+            </div>`).join('') || '<span class="text-muted">Оцінок ще немає</span>'}
+        </div>
+      </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// PARENT: ATTENDANCE
+// ═══════════════════════════════════════
+function renderParentAttendance(mc) {
+  const s = session.student;
+  const subjects = getStudentSubjects(s.id);
+
+  mc.innerHTML = `
+    <div class="page-header">
+      <h1 class="page-title">Відвідуваність</h1>
+      <p class="page-sub">${s.name} &nbsp;·&nbsp; Клас ${s.classId}</p>
+    </div>`;
+
+  if (!subjects.length) {
+    mc.innerHTML += `<div class="card"><div class="empty-state">Даних ще немає.</div></div>`;
+    return;
+  }
+
+  subjects.forEach(subj => {
+    const total = subj.rows.length;
+    const present = subj.rows.filter(r => r.att === 'p').length;
+    const absent = subj.rows.filter(r => r.att === 'a').length;
+    const pct = total > 0 ? Math.round((present / total) * 100) : null;
+
+    mc.innerHTML += `
+      <div class="card card-body mb12">
+        <div class="flex-between mb10">
+          <span style="font-size:15px;font-weight:600">${subj.subjectName}</span>
+          <div class="flex-gap">
+            ${pct !== null ? `<span class="tag ${pct >= 75 ? 'tag-subj' : 'tag-rate'}">${pct}% присутності</span>` : ''}
+            <span class="text-sm text-muted">Пропусків: <b>${absent}</b></span>
+          </div>
+        </div>
+        <div class="lesson-chips">
+          ${subj.rows.map(r => {
+            const attTxt = r.att === 'p' ? '✓' : r.att === 'a' ? 'Н' : '·';
+            const attCl = r.att === 'p' ? 'badge-ok' : r.att === 'a' ? 'badge-abs' : 'badge-neu';
+            return `<div class="lesson-chip">
+              <span class="${attCl}">${attTxt}</span>
+              <span>Урок ${r.num}</span>
+              <span class="text-muted">${(r.date||'').slice(5)}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// DIRECTOR PANEL (accessed directly)
+// ═══════════════════════════════════════
+function openDirectorPanel() {
+  const pass = prompt('Пароль директора:');
+  if (pass !== DB.director.pass) { alert('Невірний пароль'); return; }
+  renderDirectorPanel();
+}
+
+function renderDirectorPanel() {
+  document.getElementById('page-login').classList.add('hidden');
+  document.getElementById('page-app').classList.remove('hidden');
+
+  // Build director sidebar
+  const avEl = document.getElementById('sb-avatar');
+  avEl.textContent = 'Д';
+  avEl.className = 'avatar av-dir';
+  document.getElementById('sb-name').textContent = 'Директор';
+  document.getElementById('sb-role').textContent = 'Адміністратор';
+
+  const nav = document.getElementById('sidebar-nav');
+  nav.innerHTML = `
+    <button class="nav-item active" data-page="dir-stats" onclick="dirNav(this,'dir-stats')">
+      <span class="nav-icon">📊</span> Огляд
+    </button>
+    <button class="nav-item" data-page="dir-teachers" onclick="dirNav(this,'dir-teachers')">
+      <span class="nav-icon">👩‍🏫</span> Вчителі
+    </button>
+    <button class="nav-item" data-page="dir-students" onclick="dirNav(this,'dir-students')">
+      <span class="nav-icon">🎒</span> Учні
+    </button>
+    <button class="nav-item" data-page="dir-settings" onclick="dirNav(this,'dir-settings')">
+      <span class="nav-icon">⚙️</span> Налаштування
+    </button>`;
+
+  session = { role: 'director' };
+  dirNav(nav.querySelector('.nav-item'), 'dir-stats');
+}
+
+function dirNav(btn, page) {
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const mc = document.getElementById('main-content');
+  if (page === 'dir-stats') renderDirStats(mc);
+  else if (page === 'dir-teachers') renderDirTeachers(mc);
+  else if (page === 'dir-students') renderDirStudents(mc);
+  else if (page === 'dir-settings') renderDirSettings(mc);
+}
+
+function renderDirStats(mc) {
+  const totalRate = DB.teachers.reduce((a,t) => a + (t.rate||1), 0);
+  const classCnt = new Set(DB.students.map(s=>s.classId)).size;
+  mc.innerHTML = `
+    <div class="page-header"><h1 class="page-title">Огляд школи</h1></div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val">${DB.teachers.length}</div><div class="stat-lbl">Вчителів</div></div>
+      <div class="stat-card"><div class="stat-val">${DB.students.length}</div><div class="stat-lbl">Учнів</div></div>
+      <div class="stat-card"><div class="stat-val">${classCnt}</div><div class="stat-lbl">Класів</div></div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="section-label">Вчителі</div>
+        ${!DB.teachers.length ? '<div class="empty-state">Ще немає вчителів</div>' :
+        `<table><thead><tr><th></th><th>ПІБ</th><th>Email</th><th>Предмети</th><th>Ставка</th></tr></thead>
+        <tbody>${DB.teachers.map(t=>`<tr>
+          <td><div class="avatar av-tch" style="width:28px;height:28px;font-size:10px">${initials(t.name)}</div></td>
+          <td class="fw5">${t.name}</td>
+          <td class="text-muted">${t.email}</td>
+          <td>${(t.subjects||[]).map(s=>`<span class="tag tag-subj">${s.name}</span>`).join(' ')}</td>
+          <td><span class="tag tag-rate">${t.rate} ст.</span></td>
+        </tr>`).join('')}</tbody></table>`}
+      </div>
+    </div>`;
+}
+
+// ── TEACHERS ──
+let tmpSubjs = [];
+function renderDirTeachers(mc) {
+  tmpSubjs = [];
+  mc.innerHTML = `
+    <div class="page-header"><h1 class="page-title">Вчителі</h1></div>
+    <div class="card card-body mb12">
+      <div class="section-label">Додати вчителя</div>
+      <div class="form-grid mb12">
+        <div class="field"><label>ПІБ</label><input id="tn" placeholder="Прізвище Ім'я По-батькові" class="full-w"></div>
+        <div class="field"><label>Email (для входу)</label><input id="te" type="email" placeholder="teacher@school.ua" class="full-w"></div>
+        <div class="field"><label>Пароль</label><input id="tp" type="password" placeholder="мін. 4 символи" class="full-w"></div>
+        <div class="field"><label>Ставка</label>
+          <select id="tr" class="full-w">
+            <option value="0.5">0.5</option><option value="0.75">0.75</option>
+            <option value="1" selected>1.0</option><option value="1.25">1.25</option><option value="1.5">1.5</option>
+          </select>
+        </div>
+      </div>
+      <div class="section-label">Предмети</div>
+      <div class="flex-gap mb8">
+        <select id="tsubj-sel" style="width:220px">${ALL_SUBJS.map(s=>`<option>${s}</option>`).join('')}</select>
+        <button class="btn btn-ghost btn-sm" onclick="addTmpSubj()">+ Додати предмет</button>
+      </div>
+      <div id="tsubj-chips" class="flex-wrap mb12"></div>
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" onclick="saveTeacher()">Додати вчителя</button>
+      </div>
+      <div id="t-msg"></div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        ${!DB.teachers.length ? '<div class="empty-state">Ще немає вчителів</div>' :
+        `<table><thead><tr><th></th><th>ПІБ</th><th>Email</th><th>Предмети</th><th>Ставка</th><th></th></tr></thead>
+        <tbody>${DB.teachers.map(t=>`<tr>
+          <td><div class="avatar av-tch" style="width:28px;height:28px;font-size:10px">${initials(t.name)}</div></td>
+          <td class="fw5">${t.name}</td>
+          <td class="text-muted text-sm">${t.email}</td>
+          <td>${(t.subjects||[]).map(s=>`<span class="tag tag-subj">${s.name}</span>`).join(' ')}</td>
+          <td><span class="tag tag-rate">${t.rate} ст.</span></td>
+          <td><button class="btn btn-danger btn-sm" onclick="delTeacher('${t.id}')">Видалити</button></td>
+        </tr>`).join('')}</tbody></table>`}
+      </div>
+    </div>`;
+}
+
+function addTmpSubj() {
+  const n = document.getElementById('tsubj-sel').value;
+  if (tmpSubjs.find(s=>s.name===n)) return;
+  tmpSubjs.push({ id: uid(), name: n });
+  renderTmpChips();
+}
+function removeTmpSubj(id) { tmpSubjs = tmpSubjs.filter(s=>s.id!==id); renderTmpChips(); }
+function renderTmpChips() {
+  const el = document.getElementById('tsubj-chips');
+  if (!el) return;
+  el.innerHTML = tmpSubjs.map(s =>
+    `<span class="tag tag-subj" style="display:inline-flex;align-items:center;gap:4px">
+      ${s.name}<span class="chip-del" onclick="removeTmpSubj('${s.id}')">✕</span>
+    </span>`).join('');
+}
+
+function saveTeacher() {
+  const name = document.getElementById('tn').value.trim();
+  const email = document.getElementById('te').value.trim().toLowerCase();
+  const pass = document.getElementById('tp').value.trim();
+  const rate = parseFloat(document.getElementById('tr').value);
+  const msg = document.getElementById('t-msg');
+  if (!name || !email || !pass) { msg.innerHTML='<div class="alert alert-error">Заповніть ПІБ, email і пароль</div>'; return; }
+  if (DB.teachers.find(t=>t.email===email)) { msg.innerHTML='<div class="alert alert-error">Вчитель з таким email вже існує</div>'; return; }
+  if (!tmpSubjs.length) { msg.innerHTML='<div class="alert alert-error">Додайте хоча б один предмет</div>'; return; }
+  DB.teachers.push({ id: uid(), name, email, pass, rate, subjects: [...tmpSubjs] });
+  saveDB(); tmpSubjs = [];
+  renderDirTeachers(document.getElementById('main-content'));
+}
+
+function delTeacher(id) {
+  if (!confirm('Видалити вчителя?')) return;
+  DB.teachers = DB.teachers.filter(t=>t.id!==id);
+  saveDB(); renderDirTeachers(document.getElementById('main-content'));
+}
+
+// ── STUDENTS ──
+function renderDirStudents(mc) {
+  const byClass = {};
+  DB.students.forEach(s => { (byClass[s.classId]=byClass[s.classId]||[]).push(s); });
+
+  mc.innerHTML = `
+    <div class="page-header"><h1 class="page-title">Учні</h1></div>
+    <div class="card card-body mb12">
+      <div class="section-label">Додати учня</div>
+      <div class="form-grid">
+        <div class="field"><label>ПІБ</label><input id="sn" placeholder="Прізвище Ім'я По-батькові" class="full-w"></div>
+        <div class="field"><label>Клас</label>
+          <select id="sc" class="full-w">${CLASSES.map(c=>`<option>${c}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div class="mt12" style="display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" onclick="saveStudent()">Додати учня</button>
+      </div>
+      <div id="s-msg"></div>
+    </div>
+    ${!DB.students.length ? `<div class="card"><div class="empty-state">Ще немає учнів</div></div>` :
+    Object.entries(byClass).sort((a,b)=>a[0].localeCompare(b[0])).map(([cls, list]) => `
+      <div class="section-label mt16">Клас ${cls}</div>
+      <div class="card mb8">
+        <table>
+          <thead><tr><th></th><th>ПІБ</th><th>ID для батьків</th><th></th></tr></thead>
+          <tbody>
+            ${list.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>`<tr>
+              <td><div class="avatar av-par" style="width:28px;height:28px;font-size:10px">${initials(s.name)}</div></td>
+              <td class="fw5">${s.name}</td>
+              <td><span class="tag tag-id">${s.sid}</span></td>
+              <td><button class="btn btn-danger btn-sm" onclick="delStudent('${s.id}')">Видалити</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`).join('')}`;
+}
+
+function saveStudent() {
+  const name = document.getElementById('sn').value.trim();
+  const classId = document.getElementById('sc').value;
+  const msg = document.getElementById('s-msg');
+  if (!name) { msg.innerHTML='<div class="alert alert-error">Введіть ПІБ</div>'; return; }
+  DB.students.push({ id: uid(), name, classId, sid: uid().slice(0,6) });
+  saveDB(); renderDirStudents(document.getElementById('main-content'));
+}
+
+function delStudent(id) {
+  if (!confirm('Видалити учня?')) return;
+  DB.students = DB.students.filter(s=>s.id!==id);
+  saveDB(); renderDirStudents(document.getElementById('main-content'));
+}
+
+// ── SETTINGS ──
+function renderDirSettings(mc) {
+  mc.innerHTML = `
+    <div class="page-header"><h1 class="page-title">Налаштування</h1></div>
+    <div class="card card-body" style="max-width:420px">
+      <div class="section-label">Зміна пароля директора</div>
+      <div class="form-grid">
+        <div class="field"><label>Поточний пароль</label><input type="password" id="dp-old" class="full-w"></div>
+        <div class="field"><label>Новий пароль</label><input type="password" id="dp-new" class="full-w"></div>
+      </div>
+      <div class="mt12"><button class="btn btn-primary" onclick="changeDirPass()">Зберегти</button></div>
+      <div id="dp-msg"></div>
+    </div>
+    <div class="card card-body mt12" style="max-width:420px">
+      <div class="section-label" style="color:var(--red)">Небезпечна зона</div>
+      <p class="text-muted mb12">Повне скидання бази даних. Всі дані будуть втрачені.</p>
+      <button class="btn btn-danger" onclick="resetDB()">Скинути всі дані</button>
+    </div>`;
+}
+
+function changeDirPass() {
+  const old = document.getElementById('dp-old').value;
+  const nw = document.getElementById('dp-new').value;
+  const msg = document.getElementById('dp-msg');
+  if (old !== DB.director.pass) { msg.innerHTML='<div class="alert alert-error">Невірний поточний пароль</div>'; return; }
+  if (!nw) { msg.innerHTML='<div class="alert alert-error">Введіть новий пароль</div>'; return; }
+  DB.director.pass = nw; saveDB();
+  msg.innerHTML = '<div class="alert alert-success">Пароль змінено</div>';
+}
+
+function resetDB() {
+  if (!confirm('Ви впевнені? Всі дані буде видалено!')) return;
+  localStorage.removeItem(KEY);
+  location.reload();
+}
+
+// ── Secret director entry ──
+let dblTapCount = 0;
+document.addEventListener('DOMContentLoaded', () => {
+  // Ctrl+Shift+D opens director panel from login
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'D') openDirectorPanel();
+  });
+  // Hidden link at bottom of login
+  const link = document.createElement('div');
+  link.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);font-size:11px;color:#ccc;cursor:pointer;user-select:none';
+  link.textContent = 'адмін';
+  link.addEventListener('click', () => { dblTapCount++; if(dblTapCount>=2){dblTapCount=0;openDirectorPanel();} setTimeout(()=>dblTapCount=0,600); });
+  document.body.appendChild(link);
+});
+
+// ═══════════════════════════════════════
+// SEED DATA
+// ═══════════════════════════════════════
+loadDB();
+if (!DB.teachers.length) {
+  DB.teachers = [
+    { id:'T1', name:'Коваленко Марія Петрівна', email:'kovalenko@school.ua', pass:'math111', rate:1,
+      subjects:[{id:'S1',name:'Математика'},{id:'S2',name:'Алгебра'}] },
+    { id:'T2', name:'Шевченко Олег Іванович', email:'shevchenko@school.ua', pass:'phys222', rate:0.75,
+      subjects:[{id:'S3',name:'Фізика'}] },
+    { id:'T3', name:'Бондаренко Тетяна Миколаївна', email:'bondarenko@school.ua', pass:'ukr333', rate:1,
+      subjects:[{id:'S4',name:'Українська мова'},{id:'S5',name:'Українська література'}] },
+  ];
+  DB.students = [
+    { id:'ST1', name:'Іваненко Андрій Олексійович', classId:'7-А', sid:'AA1111' },
+    { id:'ST2', name:'Петренко Оксана Василівна',  classId:'7-А', sid:'BB2222' },
+    { id:'ST3', name:'Сидоренко Дмитро Іванович',  classId:'7-А', sid:'CC3333' },
+    { id:'ST4', name:'Мельник Соломія Романівна',  classId:'7-А', sid:'DD4444' },
+    { id:'ST5', name:'Кравченко Василь Петрович',  classId:'8-А', sid:'EE5555' },
+  ];
+  saveDB();
+}
+</script>
+</body>
+</html>
