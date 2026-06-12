@@ -253,13 +253,17 @@ onAuthStateChanged(auth,async user=>{
   if(user){
     try{
       const sn=await getDoc(doc(db,'users',user.uid));
-      if(sn.exists()){
-        session={role:sn.data().role,uid:user.uid,profile:sn.data()};
+      if(sn.exists()&&sn.data().role==='director'){
+        session={role:'director',uid:user.uid,profile:sn.data()};
         showApp();
-      }else{await signOut(auth);showLogin();}
-    }catch(e){await signOut(auth);showLogin();}
-  }else{showLogin();}
+        ld(false);
+        return;
+      }
+    }catch(e){}
+    await signOut(auth);
+  }
   ld(false);
+  if(!session) showLogin();
 });
 
 window.setRole=(role,btn)=>{
@@ -282,20 +286,35 @@ window.doLogin=async()=>{
   const btn=document.getElementById('li-btn');btn.disabled=true;err('li-err','');
   try{
     if(loginRole==='teacher'){
-      const phone=(document.getElementById('li-ph').value||'').trim();
+      // Teachers: check Firestore directly, no Firebase Auth needed
+      const phone=(document.getElementById('li-ph').value||'').trim().replace(/\D/g,'');
       const pass=(document.getElementById('li-ps').value||'');
       if(!phone||!pass){err('li-err','Введіть телефон і пароль');btn.disabled=false;return;}
-      await signInWithEmailAndPassword(auth,ph2em(phone),pass);
+      const q=query(collection(db,'teachers'),where('phone','==',phone));
+      const snap=await getDocs(q);
+      if(snap.empty){err('li-err','Вчителя з таким номером не знайдено');btn.disabled=false;return;}
+      const tdata=snap.docs[0].data();
+      const tid=snap.docs[0].id;
+      if(tdata.pass!==pass){err('li-err','Невірний пароль');btn.disabled=false;return;}
+      if(tdata.active===false){err('li-err','Акаунт деактивовано. Зверніться до директора.');btn.disabled=false;return;}
+      // Set session manually without Firebase Auth
+      const role=tdata.homeroomClass?'homeroom':'teacher';
+      session={role,uid:tid,profile:{...tdata,teacherId:tid,role}};
+      showApp();
     }else{
+      // Parents: lookup by student SID
       const sid=(document.getElementById('li-ps').value||'').trim().toUpperCase();
       if(!sid){err('li-err','Введіть ID учня');btn.disabled=false;return;}
       const q=query(collection(db,'students'),where('sid','==',sid));
       const sn=await getDocs(q);
       if(sn.empty){err('li-err','Учня не знайдено');btn.disabled=false;return;}
-      await signInWithEmailAndPassword(auth,sid.toLowerCase()+'@parent.sd',sid);
+      const stdata=sn.docs[0].data();
+      // Set parent session without Firebase Auth
+      session={role:'parent',uid:'par_'+sn.docs[0].id,profile:{...stdata,role:'parent'}};
+      showApp();
     }
   }catch(e){
-    err('li-err',e.code==='auth/invalid-credential'?'Невірний телефон або пароль':e.message);
+    err('li-err',e.message);
     btn.disabled=false;
   }
 };
@@ -311,11 +330,23 @@ window.doDirLogin=async()=>{
   err('de-err','');
   const e2=document.getElementById('de').value.trim();
   const p2=document.getElementById('dp').value;
-  try{await signInWithEmailAndPassword(auth,e2,p2);closeDm('dm-dir');}
-  catch(e){err('de-err','Невірний email або пароль');}
+  if(!e2||!p2){err('de-err','Введіть email і пароль');return;}
+  const btn=document.querySelector('#dm-dir .btn-pr');
+  if(btn)btn.disabled=true;
+  try{
+    await signInWithEmailAndPassword(auth,e2,p2);
+    closeDm('dm-dir');
+  }catch(e){
+    err('de-err','Невірний email або пароль');
+    if(btn)btn.disabled=false;
+  }
 };
 
-window.doLogout=async()=>{await signOut(auth);session=null;};
+window.doLogout=async()=>{
+  if(session&&session.role==='director') await signOut(auth).catch(()=>{});
+  session=null;
+  showLogin();
+};
 
 function showLogin(){
   document.getElementById('pg-app').classList.add('hidden');
@@ -463,7 +494,7 @@ function renderCC_chips(){const el=document.getElementById('tc-chips');if(!el)re
 
 window.saveTeacher=async()=>{
   const name=document.getElementById('tn').value.trim();
-  const phone=document.getElementById('tph').value.trim();
+  const phone=document.getElementById('tph').value.trim().replace(/\D/g,'');
   const pass=document.getElementById('tp').value.trim();
   const rate=parseFloat(document.getElementById('tr').value);
   const homeroomClass=document.getElementById('th-cls').value||null;
