@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SchoolDesk</title>
 <style>
-:root {
-  --bg: #F7F6F3; --surface: #FFF; --border: #E4E2DC; --text: #1A1917;
-  --text-2: #6B6860; --text-3: #9E9C96;
-  --accent: #2D5BE3; --accent-bg: #EEF2FD; --accent-t: #1A3A9F;
-  --green: #1A7F4B; --green-bg: #E8F7EF;
-  --red: #C0392B; --red-bg: #FDECEA;
-  --amber: #A05C00; --amber-bg: #FEF3E2;
-  --purple: #5B35C5; --purple-bg: #F0ECFD;
-  --teal: #0E7490; --teal-bg: #E0F7FA;
-  --gray: #6B6860; --gray-bg: #F1EFE8;
-  --r: 8px; --rl: 12px; --sh: 0 1px 3px rgba(0,0,0,.06);
+:root{
+  --bg:#F7F6F3;--surface:#FFF;--border:#E4E2DC;--text:#1A1917;
+  --t2:#6B6860;--t3:#9E9C96;
+  --ac:#2D5BE3;--ac-bg:#EEF2FD;--ac-t:#1A3A9F;
+  --gr:#1A7F4B;--gr-bg:#E8F7EF;
+  --rd:#C0392B;--rd-bg:#FDECEA;
+  --am:#A05C00;--am-bg:#FEF3E2;
+  --pu:#5B35C5;--pu-bg:#F0ECFD;
+  --tl:#0E7490;--tl-bg:#E0F7FA;
+  --gy:#6B6860;--gy-bg:#F1EFE8;
+  --r:8px;--rl:12px;--sh:0 1px 3px rgba(0,0,0,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
@@ -24,182 +24,194 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .main{flex:1;overflow-y:auto;padding:28px 32px}
 .sb-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
 .sb-logo .sn{font-size:13px;font-weight:600}
-.sb-logo .ss{font-size:11px;color:var(--text-3);margin-top:2px}
+.sb-logo .ss{font-size:11px;color:var(--t3);margin-top:2px}
 .sb-user{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
 .av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
-.av-d{background:var(--purple-bg);color:var(--purple)}
-.av-t{background:var(--green-bg);color:var(--green)}
-.av-p{background:var(--accent-bg);color:var(--accent-t)}
-.sb-uname{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sb-urole{font-size:11px;color:var(--text-3)}
+.av-d{background:var(--pu-bg);color:var(--pu)}
+.av-t{background:var(--gr-bg);color:var(--gr)}
+.av-h{background:var(--tl-bg);color:var(--tl)}
+.av-p{background:var(--ac-bg);color:var(--ac-t)}
+.sb-un{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-ur{font-size:11px;color:var(--t3)}
 .sb-nav{flex:1;padding:8px 0;overflow-y:auto}
-.ni{display:flex;align-items:center;gap:9px;padding:8px 20px;font-size:13px;color:var(--text-2);cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent;font-family:inherit}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 20px;font-size:13px;color:var(--t2);cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent;font-family:inherit}
 .ni:hover{background:var(--bg);color:var(--text)}
-.ni.active{background:var(--accent-bg);color:var(--accent);font-weight:500;border-left-color:var(--accent)}
-.sb-foot{padding:12px 20px;border-top:1px solid var(--border)}
-.btn-lo{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);cursor:pointer;background:none;border:none;padding:0;font-family:inherit}
-.btn-lo:hover{color:var(--red)}
+.ni.active{background:var(--ac-bg);color:var(--ac);font-weight:500;border-left-color:var(--ac)}
+.sb-ft{padding:12px 20px;border-top:1px solid var(--border)}
+.btn-lo{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--t3);cursor:pointer;background:none;border:none;padding:0;font-family:inherit}
+.btn-lo:hover{color:var(--rd)}
 .ph{margin-bottom:24px}
 .pt{font-size:20px;font-weight:600}
-.ps{font-size:13px;color:var(--text-2);margin-top:3px}
+.ps{font-size:13px;color:var(--t2);margin-top:3px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);box-shadow:var(--sh)}
 .cb{padding:20px 24px}
 .card+.card{margin-top:12px}
 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
 .sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
 .sv{font-size:28px;font-weight:700;line-height:1}
-.sl{font-size:12px;color:var(--text-3);margin-top:4px}
+.sl{font-size:12px;color:var(--t3);margin-top:4px}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .f{display:flex;flex-direction:column;gap:4px}
-.f label{font-size:12px;font-weight:500;color:var(--text-2)}
-input,select{font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;height:36px;transition:border-color .12s}
-input:focus,select:focus{outline:none;border-color:var(--accent);background:#fff}
-input::placeholder{color:var(--text-3)}
+.f label{font-size:12px;font-weight:500;color:var(--t2)}
+input,select,textarea{font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:0 10px;height:36px;transition:border-color .12s}
+input:focus,select:focus{outline:none;border-color:var(--ac);background:#fff}
+input::placeholder{color:var(--t3)}
 .fw{width:100%}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:0 14px;height:36px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:1px solid transparent;font-family:inherit;transition:opacity .12s}
 .btn:hover{opacity:.85}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.btn-pr{background:var(--accent);color:#fff}
-.btn-su{background:var(--green);color:#fff}
-.btn-da{background:var(--red-bg);color:var(--red);border-color:#f5c0bb}
-.btn-wa{background:var(--amber-bg);color:var(--amber);border-color:#f5c587}
-.btn-gh{background:transparent;color:var(--text-2);border-color:var(--border)}
+.btn-pr{background:var(--ac);color:#fff}
+.btn-su{background:var(--gr);color:#fff}
+.btn-da{background:var(--rd-bg);color:var(--rd);border-color:#f5c0bb}
+.btn-wa{background:var(--am-bg);color:var(--am);border-color:#f5c587}
+.btn-tl{background:var(--tl-bg);color:var(--tl);border-color:#b2e0e8}
+.btn-gh{background:transparent;color:var(--t2);border-color:var(--border)}
 .btn-gh:hover{background:var(--bg)}
 .btn-sm{height:28px;padding:0 10px;font-size:12px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;background:var(--bg)}
-td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+th{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;background:var(--bg)}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#FAFAF8}
 .tag{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px}
-.tgs{background:var(--green-bg);color:var(--green)}
-.tgr{background:var(--amber-bg);color:var(--amber)}
-.tgi{background:var(--accent-bg);color:var(--accent-t);font-family:monospace;letter-spacing:.04em}
-.tgc{background:var(--purple-bg);color:var(--purple)}
-.tgx{background:var(--red-bg);color:var(--red)}
-.tgd{background:var(--gray-bg);color:var(--gray)}
-/* attendance buttons */
-.att{width:30px;height:24px;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text-3);display:inline-flex;align-items:center;justify-content:center;font-family:inherit;transition:background .1s}
+.tgs{background:var(--gr-bg);color:var(--gr)}
+.tgr{background:var(--am-bg);color:var(--am)}
+.tgi{background:var(--ac-bg);color:var(--ac-t);font-family:monospace;letter-spacing:.04em}
+.tgc{background:var(--pu-bg);color:var(--pu)}
+.tgx{background:var(--rd-bg);color:var(--rd)}
+.tgd{background:var(--gy-bg);color:var(--gy)}
+.tgh{background:var(--tl-bg);color:var(--tl)}
+.att{width:30px;height:24px;border-radius:4px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--t3);display:inline-flex;align-items:center;justify-content:center;font-family:inherit}
 .att:disabled{cursor:default;opacity:.5}
-.att-p{background:var(--green-bg);color:var(--green);border-color:#b2e2c8}
-.att-a{background:var(--red-bg);color:var(--red);border-color:#f5c0bb}
-.att-s{background:var(--teal-bg);color:var(--teal);border-color:#b2e0e8}
+.att-p{background:var(--gr-bg);color:var(--gr);border-color:#b2e2c8}
+.att-a{background:var(--rd-bg);color:var(--rd);border-color:#f5c0bb}
+.att-s{background:var(--tl-bg);color:var(--tl);border-color:#b2e0e8}
 .gi{width:38px;height:24px;font-size:12px;padding:0;text-align:center;border:1px solid var(--border);border-radius:4px;margin-top:2px;background:var(--bg)}
 .gi:disabled{opacity:.5;cursor:default}
-.ah{color:var(--green);font-weight:700}
-.am{color:var(--accent);font-weight:600}
-.al{color:var(--amber);font-weight:600}
-.af{color:var(--red);font-weight:600}
+.ah{color:var(--gr);font-weight:700}.am2{color:var(--ac);font-weight:600}.al{color:var(--am);font-weight:600}.af{color:var(--rd);font-weight:600}
 .gb{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-size:13px;font-weight:700}
-.gbh{background:var(--green-bg);color:var(--green)}
-.gbm{background:var(--accent-bg);color:var(--accent-t)}
-.gbl{background:var(--amber-bg);color:var(--amber)}
-.gbf{background:var(--red-bg);color:var(--red)}
+.gbh{background:var(--gr-bg);color:var(--gr)}.gbm{background:var(--ac-bg);color:var(--ac-t)}.gbl{background:var(--am-bg);color:var(--am)}.gbf{background:var(--rd-bg);color:var(--rd)}
+/* login */
 .lp{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)}
 .lb{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px 40px;width:100%;max-width:380px;box-shadow:var(--sh)}
-.ll{text-align:center;margin-bottom:8px;font-size:32px}
 .lt{font-size:20px;font-weight:700;text-align:center;margin-bottom:4px}
-.ls{font-size:13px;color:var(--text-3);text-align:center;margin-bottom:28px}
+.ls{font-size:13px;color:var(--t3);text-align:center;margin-bottom:28px}
 .lf{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
-.le{font-size:12px;color:var(--red);text-align:center;min-height:18px;margin-top:8px}
+.le{font-size:12px;color:var(--rd);text-align:center;min-height:18px;margin-top:8px}
 .rt{display:flex;gap:4px;background:var(--bg);border-radius:var(--r);padding:3px;margin-bottom:20px}
-.rb{flex:1;padding:6px 4px;font-size:12px;font-weight:500;border:none;background:none;border-radius:6px;cursor:pointer;color:var(--text-3);transition:all .12s;font-family:inherit}
+.rb{flex:1;padding:6px 4px;font-size:12px;font-weight:500;border:none;background:none;border-radius:6px;cursor:pointer;color:var(--t3);font-family:inherit}
 .rb.active{background:var(--surface);color:var(--text);box-shadow:var(--sh)}
-.lc{display:inline-flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:12px}
+/* modal */
+.dm{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px;overflow-y:auto}
+.dm-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:24px;width:100%;max-width:480px;margin:auto}
+.dm-title{font-size:16px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+/* mobile nav */
+.mb-nav{display:none}
+@media(max-width:700px){
+  .sidebar{display:none}
+  .main{padding:16px 16px 80px}
+  .sg{grid-template-columns:1fr 1fr}
+  .fg{grid-template-columns:1fr}
+  .mb-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:50;padding:4px 0 6px}
+  .mb-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;font-size:10px;font-weight:500;color:var(--t3);background:none;border:none;cursor:pointer;font-family:inherit}
+  .mb-nav button.active{color:var(--ac)}
+  .mb-ico{font-size:20px;line-height:1}
+  .mb-out{position:fixed;top:12px;right:12px;z-index:51;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:6px 12px;font-size:12px;color:var(--t2);cursor:pointer;font-family:inherit}
+}
+/* util */
 .fx{display:flex;align-items:center;gap:8px}
 .fw2{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 .fb{display:flex;align-items:center;justify-content:space-between}
-.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt20{margin-top:20px}
 .mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}
 .hidden{display:none!important}
-.tm{font-size:12px;color:var(--text-3)}
+.tm{font-size:12px;color:var(--t3)}
 .fw5{font-weight:500}
-.es{padding:40px;text-align:center;color:var(--text-3);font-size:13px}
+.es{padding:40px;text-align:center;color:var(--t3);font-size:13px}
 .dv{border:none;border-top:1px solid var(--border);margin:16px 0}
-.sl-{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-.cd{cursor:pointer;color:var(--text-3);font-size:12px;margin-left:2px}
-.cd:hover{color:var(--red)}
+.sec-lbl{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.cd{cursor:pointer;color:var(--t3);font-size:12px;margin-left:2px}
+.cd:hover{color:var(--rd)}
 .al2{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-top:12px}
-.al-s{background:var(--green-bg);color:var(--green)}
-.al-e{background:var(--red-bg);color:var(--red)}
-.sp{display:inline-block;width:16px;height:16px;border:2px solid #ccc;border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+.al-s{background:var(--gr-bg);color:var(--gr)}
+.al-e{background:var(--rd-bg);color:var(--rd)}
+.sp{display:inline-block;width:16px;height:16px;border:2px solid #ccc;border-top-color:var(--ac);border-radius:50%;animation:spin .6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ov{position:fixed;inset:0;background:rgba(247,246,243,.85);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px;font-size:13px;color:var(--text-2)}
-.dm{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:center;justify-content:center}
-/* deactivated row */
-.row-inactive td{opacity:.5}
-.row-inactive td:first-child::after{content:'деактивовано';display:block;font-size:10px;color:var(--red);font-weight:500}
-@media(max-width:700px){.sidebar{display:none}.main{padding:16px 16px 80px}.sg{grid-template-columns:1fr 1fr}.fg{grid-template-columns:1fr}}
-.mb-nav{display:none}
-@media(max-width:700px){.mb-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:50;padding:4px 0 6px}
-.mb-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;font-size:10px;font-weight:500;color:var(--text-3);background:none;border:none;cursor:pointer;font-family:inherit}
-.mb-nav button.active{color:var(--accent)}
-.mb-nav .mb-ico{font-size:20px;line-height:1}
-.mb-logout{position:fixed;top:12px;right:12px;z-index:51;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:6px 12px;font-size:12px;color:var(--text-2);cursor:pointer;font-family:inherit}}
+.ov{position:fixed;inset:0;background:rgba(247,246,243,.85);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px;font-size:13px;color:var(--t2)}
+.cls-chip{display:inline-flex;align-items:center;gap:4px;background:var(--pu-bg);color:var(--pu);border-radius:6px;padding:3px 9px;font-size:12px;font-weight:500}
+.row-off td{opacity:.45}
 </style>
 </head>
 <body>
 
 <div id="ov" class="ov"><div class="sp"></div><span>Завантаження...</span></div>
 
+<!-- LOGIN -->
 <div id="pg-login" class="lp hidden">
   <div class="lb">
-    <div class="ll">🏫</div>
+    <div style="text-align:center;font-size:32px;margin-bottom:8px">🏫</div>
     <div class="lt">SchoolDesk</div>
     <div class="ls">Електронний журнал</div>
     <div class="rt">
-      <button class="rb active" onclick="setRole('teacher',this)">Вчитель</button>
+      <button class="rb active" onclick="setRole('teacher',this)">Вчитель / Кл. кер.</button>
       <button class="rb" onclick="setRole('parent',this)">Батьки</button>
     </div>
     <div class="lf">
-      <div class="f" id="phone-wrap">
+      <div class="f" id="ph-wrap">
         <label>Номер телефону</label>
-        <input type="tel" id="li-phone" placeholder="0671234567" pattern="[0-9]{10}" class="fw">
+        <input type="tel" id="li-ph" placeholder="0671234567" class="fw">
       </div>
       <div class="f">
         <label id="li-pl">Пароль</label>
-        <input type="password" id="li-pass" placeholder="••••••••" class="fw" onkeydown="if(event.key==='Enter')doLogin()">
+        <input type="password" id="li-ps" placeholder="••••••••" class="fw" onkeydown="if(event.key==='Enter')doLogin()">
       </div>
     </div>
     <button class="btn btn-pr fw" style="width:100%;justify-content:center" id="li-btn" onclick="doLogin()">Увійти →</button>
     <div class="le" id="li-err"></div>
     <div style="margin-top:20px;text-align:center">
-      <span style="font-size:11px;color:var(--text-3);cursor:pointer;user-select:none" id="adm-lnk">адмін</span>
+      <span style="font-size:11px;color:var(--t3);cursor:pointer;user-select:none" id="adm-lnk">адмін</span>
     </div>
   </div>
 </div>
 
+<!-- DIR MODAL -->
 <div id="dm-dir" class="dm hidden">
-  <div class="lb" style="max-width:320px">
-    <div class="lt" style="font-size:16px;margin-bottom:16px">Вхід директора</div>
+  <div class="dm-box" style="max-width:320px">
+    <div class="dm-title">Директор <span style="cursor:pointer;font-size:18px;color:var(--t3)" onclick="closeDm('dm-dir')">✕</span></div>
     <div class="lf">
       <div class="f"><label>Email</label><input type="email" id="de" class="fw" placeholder="director@school.ua"></div>
       <div class="f"><label>Пароль</label><input type="password" id="dp" class="fw" onkeydown="if(event.key==='Enter')doDirLogin()"></div>
     </div>
-    <div class="fx" style="gap:8px">
-      <button class="btn btn-gh" style="flex:1;justify-content:center" onclick="closeDm()">Скасувати</button>
+    <div class="fx">
+      <button class="btn btn-gh" style="flex:1;justify-content:center" onclick="closeDm('dm-dir')">Скасувати</button>
       <button class="btn btn-pr" style="flex:1;justify-content:center" onclick="doDirLogin()">Увійти</button>
     </div>
     <div class="le" id="de-err"></div>
   </div>
 </div>
 
+<!-- TEACHER DETAIL MODAL -->
+<div id="dm-teacher" class="dm hidden">
+  <div class="dm-box">
+    <div class="dm-title"><span id="dm-t-name">Вчитель</span><span style="cursor:pointer;font-size:18px;color:var(--t3)" onclick="closeDm('dm-teacher')">✕</span></div>
+    <div id="dm-t-body"></div>
+  </div>
+</div>
+
+<!-- APP -->
 <div id="pg-app" class="layout hidden">
-<div class="mb-nav" id="mb-nav"></div>
-<button class="mb-logout hidden" id="mb-logout-btn" onclick="doLogout()">Вийти</button>
   <aside class="sidebar">
     <div class="sb-logo"><div class="sn">SchoolDesk</div><div class="ss">Електронний журнал</div></div>
     <div class="sb-user">
       <div class="av" id="sb-av"></div>
-      <div style="flex:1;min-width:0">
-        <div class="sb-uname" id="sb-nm">—</div>
-        <div class="sb-urole" id="sb-rl">—</div>
-      </div>
+      <div style="flex:1;min-width:0"><div class="sb-un" id="sb-nm">—</div><div class="sb-ur" id="sb-rl">—</div></div>
     </div>
     <nav class="sb-nav" id="sb-nav"></nav>
-    <div class="sb-foot"><button class="btn-lo" onclick="doLogout()">← Вийти</button></div>
+    <div class="sb-ft"><button class="btn-lo" onclick="doLogout()">← Вийти</button></div>
   </aside>
   <main class="main" id="mc"></main>
+  <div class="mb-nav" id="mb-nav"></div>
+  <button class="mb-out hidden" id="mb-out" onclick="doLogout()">Вийти</button>
 </div>
 
 <script type="module">
@@ -218,89 +230,64 @@ const app = initializeApp({
   messagingSenderId:"265573827724",
   appId:"1:265573827724:web:7a51a1601c5d3823a027a9"
 });
-const auth = getAuth(app);
-const db   = getFirestore(app);
+const auth=getAuth(app), db=getFirestore(app);
 
 const CLASSES=['1-А','1-Б','2-А','2-Б','3-А','3-Б','4-А','4-Б','5-А','5-Б','6-А','6-Б','7-А','7-Б','8-А','8-Б','9-А','9-Б','10-А','10-Б','11-А','11-Б'];
-const SUBJS=['Математика','Алгебра','Геометрія','Українська мова','Українська література','Англійська мова','Фізика','Хімія','Біологія','Географія','Історія України','Всесвітня історія','Інформатика','Фізкультура','Музика','Образотворче мистецтво','Правознавство'];
+const SUBJS=['Математика','Алгебра','Геометрія','Українська мова','Українська література','Англійська мова','Фізика','Хімія','Біологія','Географія','Історія України','Всесвітня історія','Інформатика','Фізкультура','Музика','Образотворче мистецтво','Правознавство','Основи здоров\'я','Трудове навчання','Іноземна мова'];
+const ATT_CYCLE={null:'p',p:'a',a:'s',s:null};
+const ATT_LBL={p:'П',a:'Н',s:'Хв',null:'·'};
+const ATT_CLS={p:'att-p',a:'att-a',s:'att-s',null:''};
 
-// attendance cycle: null → p → a → s → null
-const ATT_CYCLE = {null:'p', p:'a', a:'s', s:null};
-const ATT_LABEL = {p:'П', a:'Н', s:'Хв', null:'·'};
-const ATT_CLS   = {p:'att-p', a:'att-a', s:'att-s', null:''};
+function uid(){return Math.random().toString(36).slice(2,9).toUpperCase()}
+function ini(n){return(n||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?'}
+function avgG(arr){const g=arr.filter(x=>x>0);return g.length?(g.reduce((a,b)=>a+b,0)/g.length).toFixed(1):null}
+function acl(v){if(!v)return'';const n=parseFloat(v);return n>=10?'ah':n>=7?'am2':n>=4?'al':'af'}
+function gcl(g){return g>=10?'gbh':g>=7?'gbm':g>=4?'gbl':'gbf'}
+function ld(on){document.getElementById('ov').classList.toggle('hidden',!on)}
+function err(id,m){const e=document.getElementById(id);if(e)e.textContent=m}
+function ph2em(p){return p.replace(/\D/g,'')+'@sd.local'}
 
-function uid(){ return Math.random().toString(36).slice(2,9).toUpperCase(); }
-function ini(n){ return (n||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?'; }
-function avg(arr){ const g=arr.filter(x=>x>0); return g.length?(g.reduce((a,b)=>a+b,0)/g.length).toFixed(1):null; }
-function acl(v){ if(!v)return''; const n=parseFloat(v); return n>=10?'ah':n>=7?'am':n>=4?'al':'af'; }
-function gcl(g){ return g>=10?'gbh':g>=7?'gbm':g>=4?'gbl':'gbf'; }
-function ld(on){ document.getElementById('ov').classList.toggle('hidden',!on); }
-function err(id,m){ document.getElementById(id).textContent=m; }
-function phoneToEmail(p){ return p.replace(/\D/g,'')+'@sd.local'; }
+let session=null,loginRole='teacher',tmpS=[],tmpC=[],jSt={si:0,cls:'7-А'};
 
-let session=null, loginRole='teacher', tmpS=[], jSt={si:0,cls:'7-А'};
-
-onAuthStateChanged(auth, async user=>{
+onAuthStateChanged(auth,async user=>{
   if(user){
     try{
       const sn=await getDoc(doc(db,'users',user.uid));
       if(sn.exists()){
-        session={role:sn.data().role, uid:user.uid, profile:sn.data()};
+        session={role:sn.data().role,uid:user.uid,profile:sn.data()};
         showApp();
-      } else {
-    buildMbNav([
-      {id:"p-home",ico:"📊",lbl:"Оцінки"},
-      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
-    ]); await signOut(auth); showLogin(); }
-    }catch(e){ await signOut(auth); showLogin(); }
-  } else {
-    buildMbNav([
-      {id:"p-home",ico:"📊",lbl:"Оцінки"},
-      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
-    ]); showLogin(); }
+      }else{await signOut(auth);showLogin();}
+    }catch(e){await signOut(auth);showLogin();}
+  }else{showLogin();}
   ld(false);
 });
 
-// ── login ──
 window.setRole=(role,btn)=>{
   loginRole=role;
   document.querySelectorAll('.rb').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const pw=document.getElementById('phone-wrap');
-  const pl=document.getElementById('li-pl');
+  const pw=document.getElementById('ph-wrap'),pl=document.getElementById('li-pl');
   if(role==='parent'){
-    pw.style.display='none';
-    pl.textContent='ID учня';
-    document.getElementById('li-pass').type='text';
-    document.getElementById('li-pass').placeholder='напр. AA1111';
-  } else {
-    buildMbNav([
-      {id:"p-home",ico:"📊",lbl:"Оцінки"},
-      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
-    ]);
-    pw.style.display='';
-    pl.textContent='Пароль';
-    document.getElementById('li-pass').type='password';
-    document.getElementById('li-pass').placeholder='••••••••';
+    pw.style.display='none';pl.textContent='ID учня';
+    document.getElementById('li-ps').type='text';
+    document.getElementById('li-ps').placeholder='напр. AA1111';
+  }else{
+    pw.style.display='';pl.textContent='Пароль';
+    document.getElementById('li-ps').type='password';
+    document.getElementById('li-ps').placeholder='••••••••';
   }
 };
 
 window.doLogin=async()=>{
-  const btn=document.getElementById('li-btn');
-  btn.disabled=true; err('li-err','');
+  const btn=document.getElementById('li-btn');btn.disabled=true;err('li-err','');
   try{
     if(loginRole==='teacher'){
-      const phone=(document.getElementById('li-phone').value||'').trim();
-      const pass=(document.getElementById('li-pass').value||'');
+      const phone=(document.getElementById('li-ph').value||'').trim();
+      const pass=(document.getElementById('li-ps').value||'');
       if(!phone||!pass){err('li-err','Введіть телефон і пароль');btn.disabled=false;return;}
-      const email=phoneToEmail(phone);
-      await signInWithEmailAndPassword(auth,email,pass);
-    } else {
-    buildMbNav([
-      {id:"p-home",ico:"📊",lbl:"Оцінки"},
-      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
-    ]);
-      const sid=(document.getElementById('li-pass').value||'').trim().toUpperCase();
+      await signInWithEmailAndPassword(auth,ph2em(phone),pass);
+    }else{
+      const sid=(document.getElementById('li-ps').value||'').trim().toUpperCase();
       if(!sid){err('li-err','Введіть ID учня');btn.disabled=false;return;}
       const q=query(collection(db,'students'),where('sid','==',sid));
       const sn=await getDocs(q);
@@ -313,22 +300,22 @@ window.doLogin=async()=>{
   }
 };
 
-// dir modal
 let dblTap=0;
 document.getElementById('adm-lnk').addEventListener('click',()=>{
-  dblTap++; if(dblTap>=2){dblTap=0;openDm();} setTimeout(()=>dblTap=0,600);
+  dblTap++;if(dblTap>=2){dblTap=0;openDm('dm-dir');}setTimeout(()=>dblTap=0,600);
 });
-function openDm(){ document.getElementById('dm-dir').classList.remove('hidden'); }
-window.closeDm=()=>{ document.getElementById('dm-dir').classList.add('hidden'); };
+function openDm(id){document.getElementById(id).classList.remove('hidden');}
+window.closeDm=id=>document.getElementById(id).classList.add('hidden');
+
 window.doDirLogin=async()=>{
+  err('de-err','');
   const e2=document.getElementById('de').value.trim();
   const p2=document.getElementById('dp').value;
-  err('de-err','');
-  try{ await signInWithEmailAndPassword(auth,e2,p2); closeDm(); }
-  catch(e){ err('de-err','Невірний email або пароль'); }
+  try{await signInWithEmailAndPassword(auth,e2,p2);closeDm('dm-dir');}
+  catch(e){err('de-err','Невірний email або пароль');}
 };
 
-window.doLogout=async()=>{ await signOut(auth); session=null; };
+window.doLogout=async()=>{await signOut(auth);session=null;};
 
 function showLogin(){
   document.getElementById('pg-app').classList.add('hidden');
@@ -336,80 +323,49 @@ function showLogin(){
   document.getElementById('li-btn').disabled=false;
 }
 
-// ── app shell ──
 function showApp(){
   document.getElementById('pg-login').classList.add('hidden');
   document.getElementById('pg-app').classList.remove('hidden');
   buildSb();
   const r=session.role;
-  go(r==='director'?'d-stats':r==='teacher'?'journal':'p-home');
-}
-
-function buildMbNav(pages){
-  const mn=document.getElementById("mb-nav");
-  const ml=document.getElementById("mb-logout-btn");
-  if(!mn)return;
-  mn.innerHTML=pages.map(p=>`<button data-p="${p.id}" onclick="go('${p.id}')">
-    <span class="mb-ico">${p.ico}</span><span>${p.lbl}</span>
-  </button>`).join("");
-  ml.classList.remove("hidden");
+  go(r==='director'?'d-stats':r==='homeroom'?'h-class':r==='teacher'?'journal':'p-home');
 }
 
 function buildSb(){
-  const r=session.role, p=session.profile;
+  const r=session.role,p=session.profile;
   const av=document.getElementById('sb-av');
-  av.textContent=ini(p.name||p.phone||p.email||'');
-  av.className='av '+(r==='director'?'av-d':r==='teacher'?'av-t':'av-p');
-  document.getElementById('sb-nm').textContent=p.name||p.phone||p.email||'—';
-  document.getElementById('sb-rl').textContent=r==='director'?'Директор':r==='teacher'?'Вчитель':`Клас ${p.classId||''}`;
-  const nav=document.getElementById('sb-nav');
-  if(r==="director"){
-    buildMbNav([
-      {id:"d-stats",ico:"📊",lbl:"Огляд"},
-      {id:"d-teachers",ico:"👩200d🏫",lbl:"Вчителі"},
-      {id:"d-students",ico:"🎒",lbl:"Учні"}
-    ]);
-    nav.innerHTML=`
-      <button class="ni" data-p="d-stats" onclick="go('d-stats')">📊 Огляд</button>
-      <button class="ni" data-p="d-teachers" onclick="go('d-teachers')">👩‍🏫 Вчителі</button>
-      <button class="ni" data-p="d-students" onclick="go('d-students')">🎒 Учні</button>`;
-  } else if(r==="teacher"){
-    buildMbNav([
-      {id:"journal",ico:"📒",lbl:"Журнал"},
-      {id:"t-profile",ico:"👤",lbl:"Профіль"}
-    ]);
-    nav.innerHTML=`
-      <button class="ni" data-p="journal" onclick="go('journal')">📒 Журнал</button>
-      <button class="ni" data-p="t-profile" onclick="go('t-profile')">👤 Профіль</button>`;
-  } else {
-    buildMbNav([
-      {id:"p-home",ico:"📊",lbl:"Оцінки"},
-      {id:"p-att",ico:"✅",lbl:"Відвідуваність"}
-    ]);
-    nav.innerHTML=`
-      <button class="ni" data-p="p-home" onclick="go('p-home')">📊 Успішність</button>
-      <button class="ni" data-p="p-att" onclick="go('p-att')">✅ Відвідуваність</button>`;
-  }
+  av.textContent=ini(p.name||'');
+  av.className='av '+(r==='director'?'av-d':r==='homeroom'?'av-h':r==='teacher'?'av-t':'av-p');
+  document.getElementById('sb-nm').textContent=p.name||'—';
+  document.getElementById('sb-ur').textContent=r==='director'?'Директор':r==='homeroom'?`Кл. керівник ${p.homeroomClass||''}`:r==='teacher'?'Вчитель':`Клас ${p.classId||''}`;
+  let pages=[];
+  if(r==='director')pages=[{id:'d-stats',ico:'📊',lbl:'Огляд'},{id:'d-teachers',ico:'👩‍🏫',lbl:'Вчителі'},{id:'d-students',ico:'🎒',lbl:'Учні'}];
+  else if(r==='homeroom')pages=[{id:'h-class',ico:'🏠',lbl:'Мій клас'},{id:'journal',ico:'📒',lbl:'Журнал'},{id:'t-profile',ico:'👤',lbl:'Профіль'}];
+  else if(r==='teacher')pages=[{id:'journal',ico:'📒',lbl:'Журнал'},{id:'t-profile',ico:'👤',lbl:'Профіль'}];
+  else pages=[{id:'p-home',ico:'📊',lbl:'Оцінки'},{id:'p-att',ico:'✅',lbl:'Відвідуваність'}];
+  document.getElementById('sb-nav').innerHTML=pages.map(p=>`<button class="ni" data-p="${p.id}" onclick="go('${p.id}')">${p.ico} ${p.lbl}</button>`).join('');
+  const mn=document.getElementById('mb-nav');
+  mn.innerHTML=pages.map(p=>`<button data-p="${p.id}" onclick="go('${p.id}')"><span class="mb-ico">${p.ico}</span><span>${p.lbl}</span></button>`).join('');
+  document.getElementById('mb-out').classList.remove('hidden');
 }
 
 window.go=page=>{
-  document.querySelectorAll(".mb-nav button").forEach(b=>b.classList.toggle("active",b.dataset.p===page));
-  document.querySelectorAll('.ni').forEach(b=>b.classList.toggle('active',b.dataset.p===page));
+  document.querySelectorAll('.ni,.mb-nav button').forEach(b=>b.classList.toggle('active',b.dataset.p===page));
   const mc=document.getElementById('mc');
   mc.innerHTML='<div class="es"><div class="sp"></div></div>';
   ({
     'd-stats':dStats,'d-teachers':dTeachers,'d-students':dStudents,
+    'h-class':hClass,
     'journal':tJournal,'t-profile':tProfile,
     'p-home':pHome,'p-att':pAtt
   }[page]||function(){})(mc);
 };
 
-// ════════════════════════════════
-// DIRECTOR
-// ════════════════════════════════
+// ════════════════ DIRECTOR ════════════════
+
 async function dStats(mc){
   const [ts,ss]=await Promise.all([getDocs(collection(db,'teachers')),getDocs(collection(db,'students'))]);
-  const teachers=ts.docs.map(d=>d.data()), students=ss.docs.map(d=>d.data());
+  const teachers=ts.docs.map(d=>d.data()),students=ss.docs.map(d=>d.data());
   const cc=new Set(students.map(s=>s.classId)).size;
   mc.innerHTML=`<div class="ph"><h1 class="pt">Огляд школи</h1></div>
   <div class="sg">
@@ -418,29 +374,31 @@ async function dStats(mc){
     <div class="sc"><div class="sv">${cc}</div><div class="sl">Класів</div></div>
   </div>
   <div class="card"><div class="cb">
-    <div class="sl-">Вчителі</div>
+    <div class="sec-lbl">Вчителі</div>
     ${!teachers.length?'<div class="es">Ще немає вчителів</div>':
-    `<div style="overflow-x:auto"><table><thead><tr><th>ПІБ</th><th>Телефон</th><th>Предмети</th><th>Ставка</th><th>Статус</th></tr></thead>
+    `<div style="overflow-x:auto"><table><thead><tr><th>ПІБ</th><th>Телефон</th><th>Предмети</th><th>Класи</th><th>Ставка</th><th>Статус</th></tr></thead>
     <tbody>${teachers.map(t=>`<tr>
       <td class="fw5">${t.name}</td><td class="tm">${t.phone||'—'}</td>
       <td>${(t.subjects||[]).map(s=>`<span class="tag tgs">${s.name}</span>`).join(' ')}</td>
+      <td>${(t.classes||[]).map(c=>`<span class="tag tgc">${c}</span>`).join(' ')||'—'}</td>
       <td><span class="tag tgr">${t.rate} ст.</span></td>
-      <td><span class="tag ${t.active===false?'tgx':'tgs'}">${t.active===false?'Деактивовано':'Активний'}</span></td>
+      <td><span class="tag ${t.active===false?'tgx':'tgs'}">${t.active===false?'Деакт.':'Активний'}</span>
+          ${t.homeroomClass?`<span class="tag tgh">Кл.кер. ${t.homeroomClass}</span>`:''}</td>
     </tr>`).join('')}</tbody></table></div>`}
   </div></div>`;
 }
 
 // ── teachers ──
 async function dTeachers(mc){
-  tmpS=[];
+  tmpS=[];tmpC=[];
   const snap=await getDocs(collection(db,'teachers'));
   const teachers=snap.docs.map(d=>({id:d.id,...d.data()}));
   mc.innerHTML=`<div class="ph"><h1 class="pt">Вчителі</h1></div>
   <div class="card cb mb12">
-    <div class="sl-">Додати вчителя</div>
+    <div class="sec-lbl">Додати вчителя</div>
     <div class="fg mb12">
       <div class="f"><label>ПІБ</label><input id="tn" placeholder="Прізвище Ім'я По-батькові" class="fw"></div>
-      <div class="f"><label>Телефон (для входу)</label><input id="tph" type="tel" placeholder="0671234567" class="fw"></div>
+      <div class="f"><label>Телефон</label><input id="tph" type="tel" placeholder="0671234567" class="fw"></div>
       <div class="f"><label>Пароль</label><input id="tp" type="password" placeholder="мін. 6 символів" class="fw"></div>
       <div class="f"><label>Ставка</label>
         <select id="tr" class="fw">
@@ -449,12 +407,28 @@ async function dTeachers(mc){
         </select>
       </div>
     </div>
-    <div class="sl-">Предмети</div>
-    <div class="fx mb8">
-      <select id="ts-sel" style="width:220px">${SUBJS.map(s=>`<option>${s}</option>`).join('')}</select>
-      <button class="btn btn-gh btn-sm" onclick="addTS()">+ Додати</button>
+    <div class="sec-lbl">Предмети</div>
+    <div class="fx mb8" style="flex-wrap:wrap;gap:8px">
+      <select id="ts-sel" style="width:190px">${SUBJS.map(s=>`<option>${s}</option>`).join('')}</select>
+      <button class="btn btn-gh btn-sm" onclick="addTS()">+ Зі списку</button>
+      <input id="ts-own" placeholder="Свій предмет..." style="width:160px;height:32px">
+      <button class="btn btn-gh btn-sm" onclick="addTSOwn()">+ Додати</button>
     </div>
     <div id="ts-chips" class="fw2 mb12"></div>
+    <div class="sec-lbl">Класи (де викладає)</div>
+    <div class="fx mb8" style="flex-wrap:wrap;gap:8px">
+      <select id="tc-sel" style="width:100px">${CLASSES.map(c=>`<option>${c}</option>`).join('')}</select>
+      <button class="btn btn-gh btn-sm" onclick="addTC()">+ Клас</button>
+    </div>
+    <div id="tc-chips" class="fw2 mb12"></div>
+    <div class="sec-lbl">Класний керівник</div>
+    <div class="fx mb12">
+      <select id="th-cls" style="width:120px">
+        <option value="">— немає —</option>
+        ${CLASSES.map(c=>`<option>${c}</option>`).join('')}
+      </select>
+      <span class="tm">Призначити класним керівником</span>
+    </div>
     <div style="display:flex;justify-content:flex-end">
       <button class="btn btn-pr" id="sv-t-btn" onclick="saveTeacher()">Додати вчителя</button>
     </div>
@@ -462,39 +436,37 @@ async function dTeachers(mc){
   </div>
   <div class="card"><div class="cb">
     ${!teachers.length?'<div class="es">Ще немає вчителів</div>':
-    `<div style="overflow-x:auto"><table><thead><tr><th>ПІБ</th><th>Телефон</th><th>Предмети</th><th>Ставка</th><th>Статус</th><th></th></tr></thead>
-    <tbody>${teachers.map(t=>`<tr class="${t.active===false?'row-inactive':''}">
-      <td class="fw5">${t.name}</td>
+    `<div style="overflow-x:auto"><table><thead><tr><th>ПІБ</th><th>Телефон</th><th>Класи</th><th>Ставка</th><th>Статус</th><th></th></tr></thead>
+    <tbody>${teachers.map(t=>`<tr class="${t.active===false?'row-off':''}">
+      <td><div class="fw5">${t.name}</div>${t.homeroomClass?`<div><span class="tag tgh" style="font-size:10px">Кл.кер. ${t.homeroomClass}</span></div>`:''}</td>
       <td class="tm">${t.phone||'—'}</td>
-      <td>${(t.subjects||[]).map(s=>`<span class="tag tgs">${s.name}</span>`).join(' ')}</td>
+      <td>${(t.classes||[]).map(c=>`<span class="tag tgc">${c}</span>`).join(' ')||'—'}</td>
       <td><span class="tag tgr">${t.rate} ст.</span></td>
-      <td><span class="tag ${t.active===false?'tgx':'tgs'}">${t.active===false?'Деакт.':'Активний'}</span></td>
-      <td style="white-space:nowrap">
-        <button class="btn btn-sm ${t.active===false?'btn-su':'btn-wa'}" onclick="toggleTeacher('${t.id}',${t.active!==false})" style="margin-right:4px">
-          ${t.active===false?'Активувати':'Деактивувати'}
-        </button>
-        <button class="btn btn-da btn-sm" onclick="delTeacher('${t.id}')">Видалити</button>
+      <td><span class="tag ${t.active===false?'tgx':'tgs'}">${t.active===false?'Деакт.':'Акт.'}</span></td>
+      <td style="white-space:nowrap;display:flex;gap:4px;flex-wrap:wrap">
+        <button class="btn btn-tl btn-sm" onclick="openTeacherModal('${t.id}')">Деталі</button>
+        <button class="btn btn-sm ${t.active===false?'btn-su':'btn-wa'}" onclick="toggleT('${t.id}',${t.active!==false})">${t.active===false?'Активувати':'Деакт.'}</button>
+        <button class="btn btn-da btn-sm" onclick="delT('${t.id}')">✕</button>
       </td>
     </tr>`).join('')}</tbody></table></div>`}
   </div></div>`;
 }
 
-window.addTS=()=>{
-  const n=document.getElementById('ts-sel').value;
-  if(tmpS.find(s=>s.name===n))return;
-  tmpS.push({id:uid(),name:n}); renderTC();
-};
-window.removeTS=id=>{tmpS=tmpS.filter(s=>s.id!==id);renderTC();};
-function renderTC(){
-  const el=document.getElementById('ts-chips'); if(!el)return;
-  el.innerHTML=tmpS.map(s=>`<span class="tag tgs" style="display:inline-flex;align-items:center;gap:4px">${s.name}<span class="cd" onclick="removeTS('${s.id}')">✕</span></span>`).join('');
-}
+window.addTS=()=>{const n=document.getElementById('ts-sel').value;if(!tmpS.find(s=>s.name===n)){tmpS.push({id:uid(),name:n});renderTC_chips();}};
+window.addTSOwn=()=>{const inp=document.getElementById('ts-own');const n=(inp.value||'').trim();if(!n||tmpS.find(s=>s.name===n))return;tmpS.push({id:uid(),name:n});inp.value='';renderTC_chips();};
+window.removeTS=id=>{tmpS=tmpS.filter(s=>s.id!==id);renderTC_chips();};
+function renderTC_chips(){const el=document.getElementById('ts-chips');if(!el)return;el.innerHTML=tmpS.map(s=>`<span class="tag tgs" style="display:inline-flex;align-items:center;gap:4px">${s.name}<span class="cd" onclick="removeTS('${s.id}')">✕</span></span>`).join('');}
+
+window.addTC=()=>{const n=document.getElementById('tc-sel').value;if(!tmpC.includes(n)){tmpC.push(n);renderCC_chips();}};
+window.removeTC=n=>{tmpC=tmpC.filter(c=>c!==n);renderCC_chips();};
+function renderCC_chips(){const el=document.getElementById('tc-chips');if(!el)return;el.innerHTML=tmpC.map(c=>`<span class="cls-chip">${c}<span class="cd" onclick="removeTC('${c}')">✕</span></span>`).join('');}
 
 window.saveTeacher=async()=>{
   const name=document.getElementById('tn').value.trim();
   const phone=document.getElementById('tph').value.trim();
   const pass=document.getElementById('tp').value.trim();
   const rate=parseFloat(document.getElementById('tr').value);
+  const homeroomClass=document.getElementById('th-cls').value||null;
   const msg=document.getElementById('t-msg');
   const btn=document.getElementById('sv-t-btn');
   if(!name||!phone||!pass){msg.innerHTML='<div class="al2 al-e">Заповніть ПІБ, телефон і пароль</div>';return;}
@@ -503,41 +475,91 @@ window.saveTeacher=async()=>{
   btn.disabled=true;
   try{
     const tid=uid();
-    const email=phoneToEmail(phone);
-    await setDoc(doc(db,'teachers',tid),{name,phone,email,pass,rate,subjects:[...tmpS],active:true});
-    await setDoc(doc(db,'users',tid),{role:'teacher',name,phone,email,teacherId:tid,active:true});
-    msg.innerHTML='<div class="al2 al-s">Вчителя додано. Вхід: телефон + пароль.</div>';
-    tmpS=[];
-    setTimeout(()=>go('d-teachers'),1200);
-  }catch(e){
-    msg.innerHTML=`<div class="al2 al-e">${e.message}</div>`;
-    btn.disabled=false;
-  }
+    const email=ph2em(phone);
+    const role=homeroomClass?'homeroom':'teacher';
+    await setDoc(doc(db,'teachers',tid),{name,phone,email,pass,rate,subjects:[...tmpS],classes:[...tmpC],homeroomClass,active:true});
+    await setDoc(doc(db,'users',tid),{role,name,phone,email,teacherId:tid,homeroomClass,active:true});
+    msg.innerHTML='<div class="al2 al-s">Вчителя додано!</div>';
+    tmpS=[];tmpC=[];
+    setTimeout(()=>go('d-teachers'),1000);
+  }catch(e){msg.innerHTML=`<div class="al2 al-e">${e.message}</div>`;btn.disabled=false;}
 };
 
-window.toggleTeacher=async(id,isActive)=>{
-  const newState=!isActive;
-  await updateDoc(doc(db,'teachers',id),{active:newState});
-  await updateDoc(doc(db,'users',id),{active:newState}).catch(()=>{});
+window.toggleT=async(id,isActive)=>{
+  const ns=!isActive;
+  await updateDoc(doc(db,'teachers',id),{active:ns});
+  await updateDoc(doc(db,'users',id),{active:ns}).catch(()=>{});
   go('d-teachers');
 };
-
-window.delTeacher=async id=>{
-  if(!confirm('Видалити вчителя? Всі його уроки залишаться.'))return;
+window.delT=async id=>{
+  if(!confirm('Видалити вчителя?'))return;
   await deleteDoc(doc(db,'teachers',id));
   await deleteDoc(doc(db,'users',id)).catch(()=>{});
   go('d-teachers');
 };
 
+// teacher detail modal
+window.openTeacherModal=async(tid)=>{
+  const snap=await getDoc(doc(db,'teachers',tid));
+  const t={id:tid,...snap.data()};
+  document.getElementById('dm-t-name').textContent=t.name;
+  const body=document.getElementById('dm-t-body');
+
+  // build classes checkboxes
+  const selCls=(t.classes||[]);
+  const selHomeroom=t.homeroomClass||'';
+
+  body.innerHTML=`
+    <div class="sec-lbl mb8">Предмети</div>
+    <div class="fw2 mb16">${(t.subjects||[]).map(s=>`<span class="tag tgs">${s.name}</span>`).join('')||'—'}</div>
+    <div class="sec-lbl mb8">Класи де викладає</div>
+    <div class="fw2 mb16" id="dm-cls-list">
+      ${CLASSES.map(c=>`<label style="display:inline-flex;align-items:center;gap:4px;cursor:pointer">
+        <input type="checkbox" value="${c}" ${selCls.includes(c)?'checked':''} style="width:16px;height:16px;cursor:pointer">
+        <span style="font-size:13px">${c}</span>
+      </label>`).join('')}
+    </div>
+    <div class="sec-lbl mb8">Класний керівник</div>
+    <div class="fx mb16">
+      <select id="dm-homeroom" style="width:120px">
+        <option value="">— немає —</option>
+        ${CLASSES.map(c=>`<option ${c===selHomeroom?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    <div class="sec-lbl mb8">Статус</div>
+    <div class="fx mb16">
+      <span class="tag ${t.active===false?'tgx':'tgs'}">${t.active===false?'Деактивовано':'Активний'}</span>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn btn-gh" onclick="closeDm('dm-teacher')">Скасувати</button>
+      <button class="btn btn-pr" onclick="saveTeacherModal('${tid}')">Зберегти</button>
+    </div>
+    <div id="dm-t-msg"></div>`;
+  openDm('dm-teacher');
+};
+
+window.saveTeacherModal=async(tid)=>{
+  const checks=document.querySelectorAll('#dm-cls-list input[type=checkbox]');
+  const classes=[...checks].filter(c=>c.checked).map(c=>c.value);
+  const homeroomClass=document.getElementById('dm-homeroom').value||null;
+  const msg=document.getElementById('dm-t-msg');
+  try{
+    const role=homeroomClass?'homeroom':'teacher';
+    await updateDoc(doc(db,'teachers',tid),{classes,homeroomClass});
+    await updateDoc(doc(db,'users',tid),{homeroomClass,role}).catch(()=>{});
+    msg.innerHTML='<div class="al2 al-s">Збережено</div>';
+    setTimeout(()=>{closeDm('dm-teacher');go('d-teachers');},800);
+  }catch(e){msg.innerHTML=`<div class="al2 al-e">${e.message}</div>`;}
+};
+
 // ── students ──
 async function dStudents(mc){
   const snap=await getDocs(collection(db,'students'));
-  const students=snap.docs.map(d=>({id:d.id,...d.data()}));
-  const byC={};
-  students.forEach(s=>{(byC[s.classId]=byC[s.classId]||[]).push(s);});
+  const all=snap.docs.map(d=>({id:d.id,...d.data()}));
+  window._allSt=all;
   mc.innerHTML=`<div class="ph"><h1 class="pt">Учні</h1></div>
   <div class="card cb mb12">
-    <div class="sl-">Додати учня</div>
+    <div class="sec-lbl">Додати учня</div>
     <div class="fg">
       <div class="f"><label>ПІБ</label><input id="sn" placeholder="Прізвище Ім'я По-батькові" class="fw"></div>
       <div class="f"><label>Клас</label><select id="sc" class="fw">${CLASSES.map(c=>`<option>${c}</option>`).join('')}</select></div>
@@ -547,17 +569,29 @@ async function dStudents(mc){
     </div>
     <div id="s-msg"></div>
   </div>
-  ${!students.length?'<div class="card"><div class="es">Ще немає учнів</div></div>':
-  Object.entries(byC).sort((a,b)=>a[0].localeCompare(b[0])).map(([cls,list])=>`
-    <div class="sl- mt16">Клас ${cls}</div>
+  <div class="card cb mb12">
+    <input id="s-search" placeholder="Пошук по ПІБ, ID або класу..." class="fw" oninput="filterSt(this.value)">
+  </div>
+  <div id="s-list"></div>`;
+  renderStList(all);
+}
+
+window.filterSt=q=>{const qq=q.toLowerCase();renderStList((window._allSt||[]).filter(s=>s.name.toLowerCase().includes(qq)||s.sid.toLowerCase().includes(qq)||s.classId.toLowerCase().includes(qq)));};
+function renderStList(students){
+  const el=document.getElementById('s-list');if(!el)return;
+  if(!students.length){el.innerHTML='<div class="card"><div class="es">Нічого не знайдено</div></div>';return;}
+  const byC={};students.forEach(s=>{(byC[s.classId]=byC[s.classId]||[]).push(s);});
+  el.innerHTML=Object.entries(byC).sort((a,b)=>a[0].localeCompare(b[0])).map(([cls,list])=>`
+    <div class="sec-lbl mt16">Клас ${cls}</div>
     <div class="card mb8"><div style="overflow-x:auto"><table>
-      <thead><tr><th>ПІБ</th><th>ID для батьків</th><th></th></tr></thead>
-      <tbody>${list.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>`<tr>
+      <thead><tr><th>#</th><th>ПІБ</th><th>ID для батьків</th><th></th></tr></thead>
+      <tbody>${list.sort((a,b)=>a.name.localeCompare(b.name)).map((s,i)=>`<tr>
+        <td class="tm">${i+1}</td>
         <td class="fw5">${s.name}</td>
         <td><span class="tag tgi">${s.sid}</span></td>
-        <td><button class="btn btn-da btn-sm" onclick="delStudent('${s.id}')">Видалити</button></td>
-      </tr>`).join('')}</tbody>
-    </table></div></div>`).join('')}`;
+        <td><button class="btn btn-da btn-sm" onclick="delSt('${s.id}')">✕</button></td>
+      </tr>`).join('')}
+      </tbody></table></div></div>`).join('');
 }
 
 window.saveStudent=async()=>{
@@ -565,23 +599,59 @@ window.saveStudent=async()=>{
   const classId=document.getElementById('sc').value;
   const msg=document.getElementById('s-msg');
   if(!name){msg.innerHTML='<div class="al2 al-e">Введіть ПІБ</div>';return;}
-  const sid=uid().slice(0,6);
-  const id=uid();
+  const sid=uid().slice(0,6),id=uid();
   await setDoc(doc(db,'students',id),{name,classId,sid});
   await setDoc(doc(db,'users','par_'+id),{role:'parent',name,classId,sid,studentId:id});
   msg.innerHTML=`<div class="al2 al-s">Додано. ID для батьків: <b>${sid}</b></div>`;
   setTimeout(()=>go('d-students'),1200);
 };
+window.delSt=async id=>{if(!confirm('Видалити учня?'))return;await deleteDoc(doc(db,'students',id));go('d-students');};
 
-window.delStudent=async id=>{
-  if(!confirm('Видалити учня?'))return;
-  await deleteDoc(doc(db,'students',id));
-  go('d-students');
+// ════════════════ HOMEROOM ════════════════
+async function hClass(mc){
+  const p=session.profile;
+  const cls=p.homeroomClass;
+  if(!cls){mc.innerHTML='<div class="es">Клас не призначено. Зверніться до директора.</div>';return;}
+  const snap=await getDocs(query(collection(db,'students'),where('classId','==',cls)));
+  const students=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name));
+
+  mc.innerHTML=`<div class="ph"><h1 class="pt">Клас ${cls}</h1><p class="ps">Класний керівник</p></div>
+  <div class="card cb mb12">
+    <div class="sec-lbl">Додати учня до класу ${cls}</div>
+    <div class="fg">
+      <div class="f"><label>ПІБ</label><input id="hsn" placeholder="Прізвище Ім'я По-батькові" class="fw"></div>
+    </div>
+    <div class="mt12" style="display:flex;justify-content:flex-end">
+      <button class="btn btn-pr" onclick="hAddStudent('${cls}')">Додати учня</button>
+    </div>
+    <div id="hs-msg"></div>
+  </div>
+  <div class="card"><div class="cb">
+    <div class="sec-lbl">Учні класу — ${students.length} осіб</div>
+    ${!students.length?'<div class="es">Клас порожній</div>':
+    `<table><thead><tr><th>#</th><th>ПІБ</th><th>ID для батьків</th><th></th></tr></thead>
+    <tbody>${students.map((s,i)=>`<tr>
+      <td class="tm">${i+1}</td>
+      <td class="fw5">${s.name}</td>
+      <td><span class="tag tgi">${s.sid}</span></td>
+      <td><button class="btn btn-da btn-sm" onclick="hDelStudent('${s.id}')">✕</button></td>
+    </tr>`).join('')}</tbody></table>`}
+  </div></div>`;
+}
+
+window.hAddStudent=async(cls)=>{
+  const name=document.getElementById('hsn').value.trim();
+  const msg=document.getElementById('hs-msg');
+  if(!name){msg.innerHTML='<div class="al2 al-e">Введіть ПІБ</div>';return;}
+  const sid=uid().slice(0,6),id=uid();
+  await setDoc(doc(db,'students',id),{name,classId:cls,sid});
+  await setDoc(doc(db,'users','par_'+id),{role:'parent',name,classId:cls,sid,studentId:id});
+  msg.innerHTML=`<div class="al2 al-s">Додано! ID: <b>${sid}</b></div>`;
+  setTimeout(()=>go('h-class'),1000);
 };
+window.hDelStudent=async id=>{if(!confirm('Видалити учня?'))return;await deleteDoc(doc(db,'students',id));go('h-class');};
 
-// ════════════════════════════════
-// TEACHER JOURNAL
-// ════════════════════════════════
+// ════════════════ TEACHER JOURNAL ════════════════
 async function tJournal(mc){
   const p=session.profile;
   const tid=p.teacherId||session.uid;
@@ -589,76 +659,56 @@ async function tJournal(mc){
   const teacher=tdoc.exists()?tdoc.data():p;
   const isActive=teacher.active!==false;
   const subjs=teacher.subjects||[];
+  const allowedCls=teacher.classes&&teacher.classes.length?teacher.classes:CLASSES;
 
-  if(!subjs.length){
-    mc.innerHTML='<div class="ph"><h1 class="pt">Журнал</h1></div><div class="card"><div class="es">Немає предметів</div></div>';
-    return;
-  }
+  if(!subjs.length){mc.innerHTML='<div class="ph"><h1 class="pt">Журнал</h1></div><div class="card"><div class="es">Немає предметів</div></div>';return;}
+  if(!allowedCls.includes(jSt.cls))jSt.cls=allowedCls[0];
 
   const students=(await getDocs(query(collection(db,'students'),where('classId','==',jSt.cls)))).docs
     .map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name));
-
   const curS=subjs[jSt.si];
   const lSnap=await getDocs(query(collection(db,'lessons'),
     where('teacherId','==',tid),where('classId','==',jSt.cls),where('subjectId','==',curS.id)));
   const lessons=lSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.num-b.num);
 
   const sOpts=subjs.map((s,i)=>`<option value="${i}" ${i===jSt.si?'selected':''}>${s.name}</option>`).join('');
-  const cOpts=CLASSES.map(c=>`<option ${c===jSt.cls?'selected':''}>${c}</option>`).join('');
+  const cOpts=allowedCls.map(c=>`<option ${c===jSt.cls?'selected':''}>${c}</option>`).join('');
 
   let tbl='';
-  if(!students.length) tbl='<div class="es">У цьому класі ще немає учнів</div>';
-  else if(!lessons.length) tbl='<div class="es">Немає уроків. Натисніть «+ Урок»</div>';
-  else {
-    tbl=`<div style="overflow-x:auto"><table class="jnl">
-      <thead><tr>
-        <th style="min-width:180px">Учень</th>
-        ${lessons.map(l=>`<th style="text-align:center;min-width:54px">№${l.num}<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">${(l.date||'').slice(5)}</span></th>`).join('')}
-        <th style="text-align:center">Сер.</th>
-      </tr></thead><tbody>
-      ${students.map(s=>{
-        const grades=[];
-        const cells=lessons.map(l=>{
-          const e=(l.entries||[]).find(x=>x.studentId===s.id);
-          const att=e?e.att:null;
-          const grade=e?e.grade||0:0;
-          if(grade>0)grades.push(grade);
-          const al=ATT_LABEL[att]||'·';
-          const ac=ATT_CLS[att]||'';
-          return `<td style="text-align:center">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
-              <button class="att ${ac}" ${!isActive?'disabled':''} onclick="cycleAtt('${l.id}','${s.id}')">${al}</button>
-              <input class="gi" type="number" min="1" max="12" value="${grade>0?grade:''}" placeholder="—"
-                ${!isActive?'disabled':''} onchange="setGrade(this,'${l.id}','${s.id}')">
-            </div>
-          </td>`;
-        }).join('');
-        const a=avg(grades);
-        return `<tr>
-          <td><div class="fx" style="gap:6px">
-            <div class="av av-p" style="width:24px;height:24px;font-size:10px">${ini(s.name)}</div>
-            <span class="fw5">${s.name}</span>
-          </div></td>
-          ${cells}
-          <td style="text-align:center">${a?`<span class="${acl(a)}" style="font-size:14px">${a}</span>`:'—'}</td>
-        </tr>`;
-      }).join('')}
-      </tbody></table></div>`;
-  }
+  if(!students.length)tbl='<div class="es">У цьому класі ще немає учнів</div>';
+  else if(!lessons.length)tbl='<div class="es">Немає уроків. Натисніть «+ Урок»</div>';
+  else tbl=`<div style="overflow-x:auto"><table>
+    <thead><tr>
+      <th style="min-width:180px">Учень</th>
+      ${lessons.map(l=>`<th style="text-align:center;min-width:54px">№${l.num}<br><span style="font-size:10px;font-weight:400;color:var(--t3)">${(l.date||'').slice(5)}</span></th>`).join('')}
+      <th style="text-align:center">Сер.</th>
+    </tr></thead><tbody>
+    ${students.map(s=>{
+      const grades=[];
+      const cells=lessons.map(l=>{
+        const e=(l.entries||[]).find(x=>x.studentId===s.id);
+        const att=e?e.att:null,grade=e?e.grade||0:0;
+        if(grade>0)grades.push(grade);
+        return `<td style="text-align:center">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+            <button class="att ${ATT_CLS[att]||''}" ${!isActive?'disabled':''} onclick="cycleAtt('${l.id}','${s.id}')">${ATT_LBL[att]||'·'}</button>
+            <input class="gi" type="number" min="1" max="12" value="${grade>0?grade:''}" placeholder="—" ${!isActive?'disabled':''} onchange="setGrade(this,'${l.id}','${s.id}')">
+          </div>
+        </td>`;
+      }).join('');
+      const a=avgG(grades);
+      return `<tr><td><div class="fx" style="gap:6px"><div class="av av-p" style="width:24px;height:24px;font-size:10px">${ini(s.name)}</div><span class="fw5">${s.name}</span></div></td>${cells}<td style="text-align:center">${a?`<span class="${acl(a)}" style="font-size:14px">${a}</span>`:'—'}</td></tr>`;
+    }).join('')}
+    </tbody></table></div>`;
 
   mc.innerHTML=`
-    <div class="ph">
-      <h1 class="pt">Журнал</h1>
+    <div class="ph"><h1 class="pt">Журнал</h1>
       <p class="ps">${teacher.name||''}${!isActive?' &nbsp;<span class="tag tgx">Деактивовано — тільки перегляд</span>':''}</p>
     </div>
     <div class="card cb mb12">
       <div class="fw2" style="gap:12px">
-        <div class="f"><label>Предмет</label>
-          <select onchange="jSt.si=parseInt(this.value);go('journal')">${sOpts}</select>
-        </div>
-        <div class="f"><label>Клас</label>
-          <select onchange="jSt.cls=this.value;go('journal')">${cOpts}</select>
-        </div>
+        <div class="f"><label>Предмет</label><select onchange="jSt.si=parseInt(this.value);go('journal')">${sOpts}</select></div>
+        <div class="f"><label>Клас</label><select onchange="jSt.cls=this.value;go('journal')">${cOpts}</select></div>
         ${isActive?`<div style="margin-top:auto"><button class="btn btn-su" onclick="addLesson()">+ Урок</button></div>`:''}
       </div>
     </div>
@@ -666,49 +716,26 @@ async function tJournal(mc){
 }
 
 window.addLesson=async()=>{
-  const p=session.profile, tid=p.teacherId||session.uid;
+  const p=session.profile,tid=p.teacherId||session.uid;
   const td=await getDoc(doc(db,'teachers',tid));
   if(td.data().active===false)return;
   const curS=td.data().subjects[jSt.si];
-  const ex=await getDocs(query(collection(db,'lessons'),
-    where('teacherId','==',tid),where('classId','==',jSt.cls),where('subjectId','==',curS.id)));
-  const num=ex.size+1;
-  await setDoc(doc(db,'lessons',uid()),{
-    num,date:new Date().toISOString().slice(0,10),
-    teacherId:tid,classId:jSt.cls,subjectId:curS.id,entries:[]
-  });
+  const ex=await getDocs(query(collection(db,'lessons'),where('teacherId','==',tid),where('classId','==',jSt.cls),where('subjectId','==',curS.id)));
+  await setDoc(doc(db,'lessons',uid()),{num:ex.size+1,date:new Date().toISOString().slice(0,10),teacherId:tid,classId:jSt.cls,subjectId:curS.id,entries:[]});
   go('journal');
 };
 
 async function ensureEntry(lid,sid){
-  const lr=doc(db,'lessons',lid);
-  const ls=await getDoc(lr);
-  const d=ls.data();
-  const entries=d.entries||[];
+  const lr=doc(db,'lessons',lid),ls=await getDoc(lr),d=ls.data(),entries=d.entries||[];
   let e=entries.find(x=>x.studentId===sid);
   if(!e){e={studentId:sid,att:null,grade:0};entries.push(e);}
-  return {lr,entries,e};
+  return{lr,entries,e};
 }
-
-window.cycleAtt=async(lid,sid)=>{
-  const {lr,entries,e}=await ensureEntry(lid,sid);
-  e.att=ATT_CYCLE[e.att===undefined?'null':e.att]??null;
-  await updateDoc(lr,{entries});
-  go('journal');
-};
-
-window.setGrade=async(inp,lid,sid)=>{
-  const v=parseInt(inp.value);
-  const grade=(v>=1&&v<=12)?v:0;
-  if(!grade)inp.value='';
-  const {lr,entries,e}=await ensureEntry(lid,sid);
-  e.grade=grade;
-  await updateDoc(lr,{entries});
-  go('journal');
-};
+window.cycleAtt=async(lid,sid)=>{const{lr,entries,e}=await ensureEntry(lid,sid);e.att=ATT_CYCLE[e.att===undefined?'null':e.att]??null;await updateDoc(lr,{entries});go('journal');};
+window.setGrade=async(inp,lid,sid)=>{const v=parseInt(inp.value),grade=(v>=1&&v<=12)?v:0;if(!grade)inp.value='';const{lr,entries,e}=await ensureEntry(lid,sid);e.grade=grade;await updateDoc(lr,{entries});go('journal');};
 
 async function tProfile(mc){
-  const p=session.profile, tid=p.teacherId||session.uid;
+  const p=session.profile,tid=p.teacherId||session.uid;
   const td=await getDoc(doc(db,'teachers',tid));
   const t=td.data()||p;
   mc.innerHTML=`<div class="ph"><h1 class="pt">Мій профіль</h1></div>
@@ -718,31 +745,30 @@ async function tProfile(mc){
       <div style="margin-left:12px">
         <div style="font-size:16px;font-weight:600">${t.name}</div>
         <div class="tm">${t.phone||'—'} · <span class="tag tgr">${t.rate} ставки</span> · <span class="tag ${t.active===false?'tgx':'tgs'}">${t.active===false?'Деактивовано':'Активний'}</span></div>
+        ${t.homeroomClass?`<div class="mt8"><span class="tag tgh">Класний керівник: ${t.homeroomClass}</span></div>`:''}
       </div>
     </div>
     <hr class="dv">
-    <div class="sl-">Предмети</div>
-    <div class="fw2">${(t.subjects||[]).map(s=>`<span class="tag tgs">${s.name}</span>`).join('')||'<span class="tm">Немає</span>'}</div>
+    <div class="sec-lbl">Предмети</div>
+    <div class="fw2 mb12">${(t.subjects||[]).map(s=>`<span class="tag tgs">${s.name}</span>`).join('')||'<span class="tm">Немає</span>'}</div>
+    <div class="sec-lbl">Класи</div>
+    <div class="fw2">${(t.classes||[]).map(c=>`<span class="cls-chip">${c}</span>`).join('')||'<span class="tm">Всі</span>'}</div>
   </div>`;
 }
 
-// ════════════════════════════════
-// PARENT
-// ════════════════════════════════
+// ════════════════ PARENT ════════════════
 async function getSD(sid,classId){
   const ts=await getDocs(collection(db,'teachers'));
   const res=[];
   for(const td of ts.docs){
     const t=td.data();
-    for(const subj of (t.subjects||[])){
-      const ls=await getDocs(query(collection(db,'lessons'),
-        where('teacherId','==',td.id),where('classId','==',classId),where('subjectId','==',subj.id)));
+    for(const subj of(t.subjects||[])){
+      const ls=await getDocs(query(collection(db,'lessons'),where('teacherId','==',td.id),where('classId','==',classId),where('subjectId','==',subj.id)));
       if(ls.empty)continue;
       const rows=ls.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.num-b.num)
-        .map(l=>{const e=(l.entries||[]).find(x=>x.studentId===sid);
-          return{num:l.num,date:l.date,att:e?e.att:null,grade:e?e.grade||0:0};});
+        .map(l=>{const e=(l.entries||[]).find(x=>x.studentId===sid);return{num:l.num,date:l.date,att:e?e.att:null,grade:e?e.grade||0:0};});
       const grades=rows.map(r=>r.grade).filter(g=>g>0);
-      res.push({tName:t.name,sName:subj.name,rows,avg:avg(grades)});
+      res.push({tName:t.name,sName:subj.name,rows,avg:avgG(grades)});
     }
   }
   return res;
@@ -750,77 +776,50 @@ async function getSD(sid,classId){
 
 async function pHome(mc){
   const p=session.profile;
-  const sq=query(collection(db,'students'),where('sid','==',p.sid));
-  const ss=await getDocs(sq);
+  const ss=await getDocs(query(collection(db,'students'),where('sid','==',p.sid)));
   if(ss.empty){mc.innerHTML='<div class="es">Учня не знайдено</div>';return;}
   const st={id:ss.docs[0].id,...ss.docs[0].data()};
   const subjects=await getSD(st.id,st.classId);
-  mc.innerHTML=`<div class="ph"><h1 class="pt">Успішність</h1>
-    <p class="ps">${st.name} · Клас ${st.classId} · ID: <span class="tag tgi">${st.sid}</span></p></div>`;
+  mc.innerHTML=`<div class="ph"><h1 class="pt">Успішність</h1><p class="ps">${st.name} · Клас ${st.classId} · ID: <span class="tag tgi">${st.sid}</span></p></div>`;
   if(!subjects.length){mc.innerHTML+='<div class="card"><div class="es">Журнал ще не заповнений</div></div>';return;}
   subjects.forEach(subj=>{
     const gr=subj.rows.filter(r=>r.grade>0);
     mc.innerHTML+=`<div class="card cb mb12">
-      <div class="fb mb12">
-        <div><span style="font-size:15px;font-weight:600">${subj.sName}</span>
-          <span class="tm" style="margin-left:8px">${subj.tName}</span></div>
-        ${subj.avg?`<span class="${acl(subj.avg)}" style="font-size:20px;font-weight:700">${subj.avg}</span>`:''}
-      </div>
-      <div class="fw2">
-        ${gr.map(r=>`<div style="display:flex;flex-direction:column;align-items:center;gap:2px">
-          <span class="tm" style="font-size:10px">№${r.num}</span>
-          <span class="gb ${gcl(r.grade)}">${r.grade}</span>
-        </div>`).join('')||'<span class="tm">Оцінок ще немає</span>'}
-      </div>
+      <div class="fb mb12"><div><span style="font-size:15px;font-weight:600">${subj.sName}</span><span class="tm" style="margin-left:8px">${subj.tName}</span></div>${subj.avg?`<span class="${acl(subj.avg)}" style="font-size:20px;font-weight:700">${subj.avg}</span>`:''}</div>
+      <div class="fw2">${gr.map(r=>`<div style="display:flex;flex-direction:column;align-items:center;gap:2px"><span class="tm" style="font-size:10px">№${r.num}</span><span class="gb ${gcl(r.grade)}">${r.grade}</span></div>`).join('')||'<span class="tm">Оцінок ще немає</span>'}</div>
     </div>`;
   });
 }
 
 async function pAtt(mc){
   const p=session.profile;
-  const sq=query(collection(db,'students'),where('sid','==',p.sid));
-  const ss=await getDocs(sq);
+  const ss=await getDocs(query(collection(db,'students'),where('sid','==',p.sid)));
   if(ss.empty){mc.innerHTML='<div class="es">Учня не знайдено</div>';return;}
   const st={id:ss.docs[0].id,...ss.docs[0].data()};
   const subjects=await getSD(st.id,st.classId);
-  mc.innerHTML=`<div class="ph"><h1 class="pt">Відвідуваність</h1>
-    <p class="ps">${st.name} · Клас ${st.classId}</p></div>`;
+  mc.innerHTML=`<div class="ph"><h1 class="pt">Відвідуваність</h1><p class="ps">${st.name} · Клас ${st.classId}</p></div>`;
   if(!subjects.length){mc.innerHTML+='<div class="card"><div class="es">Даних ще немає</div></div>';return;}
   subjects.forEach(subj=>{
-    const tot=subj.rows.length;
-    const pr=subj.rows.filter(r=>r.att==='p').length;
-    const ab=subj.rows.filter(r=>r.att==='a').length;
-    const sk=subj.rows.filter(r=>r.att==='s').length;
+    const tot=subj.rows.length,pr=subj.rows.filter(r=>r.att==='p').length,ab=subj.rows.filter(r=>r.att==='a').length,sk=subj.rows.filter(r=>r.att==='s').length;
     const pct=tot>0?Math.round(pr/tot*100):null;
     mc.innerHTML+=`<div class="card cb mb12">
-      <div class="fb mb10">
-        <span style="font-size:15px;font-weight:600">${subj.sName}</span>
+      <div class="fb mb10"><span style="font-size:15px;font-weight:600">${subj.sName}</span>
         <div class="fx" style="gap:6px">
-          ${pct!==null?`<span class="tag ${pct>=75?'tgs':'tgr'}">${pct}% присутності</span>`:''}
+          ${pct!==null?`<span class="tag ${pct>=75?'tgs':'tgr'}">${pct}%</span>`:''}
           ${ab?`<span class="tag tgx">Н: ${ab}</span>`:''}
-          ${sk?`<span class="tag" style="background:var(--teal-bg);color:var(--teal)">Хв: ${sk}</span>`:''}
+          ${sk?`<span class="tag tgh">Хв: ${sk}</span>`:''}
         </div>
       </div>
-      <div class="fw2">
-        ${subj.rows.map(r=>{
-          const lbl=ATT_LABEL[r.att]||'·';
-          const bg=r.att==='p'?'var(--green-bg)':r.att==='a'?'var(--red-bg)':r.att==='s'?'var(--teal-bg)':'var(--bg)';
-          const cl=r.att==='p'?'var(--green)':r.att==='a'?'var(--red)':r.att==='s'?'var(--teal)':'var(--text-3)';
-          return `<div class="lc" style="background:${bg};border-color:${cl};color:${cl}">
-            ${lbl} №${r.num} <span style="color:var(--text-3);font-size:10px">${(r.date||'').slice(5)}</span>
-          </div>`;
-        }).join('')}
-      </div>
+      <div class="fw2">${subj.rows.map(r=>{
+        const bg=r.att==='p'?'var(--gr-bg)':r.att==='a'?'var(--rd-bg)':r.att==='s'?'var(--tl-bg)':'var(--bg)';
+        const cl=r.att==='p'?'var(--gr)':r.att==='a'?'var(--rd)':r.att==='s'?'var(--tl)':'var(--t3)';
+        return `<div style="display:inline-flex;align-items:center;gap:4px;background:${bg};border:1px solid ${cl};color:${cl};border-radius:6px;padding:3px 8px;font-size:12px">
+          ${ATT_LBL[r.att]||'·'} №${r.num} <span style="color:var(--t3);font-size:10px">${(r.date||'').slice(5)}</span>
+        </div>`;
+      }).join('')}</div>
     </div>`;
   });
 }
-
-// expose helpers to inline handlers
-['go','setRole','doLogin','doLogout','closeDm','doDirLogin',
- 'addTS','removeTS','saveTeacher','toggleTeacher','delTeacher',
- 'saveStudent','delStudent','addLesson','cycleAtt','setGrade']
-.forEach(fn=>window[fn]=window[fn]);
-
 </script>
 </body>
 </html>
