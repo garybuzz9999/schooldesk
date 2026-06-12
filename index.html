@@ -189,8 +189,45 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const db   = firebase.firestore();
 
-const CLASSES=['1-А','1-Б','2-А','2-Б','3-А','3-Б','4-А','4-Б','5-А','5-Б','6-А','6-Б','7-А','7-Б','8-А','8-Б','9-А','9-Б','10-А','10-Б','11-А','11-Б'];
-const SUBJS=['Математика','Алгебра','Геометрія','Українська мова','Українська література','Англійська мова','Фізика','Хімія','Біологія','Географія','Історія України','Всесвітня історія','Інформатика','Фізкультура','Музика','Образотворче мистецтво','Правознавство','Основи здоров\'я','Трудове навчання'];
+const BASE_CLASSES=['1-А','1-Б','2-А','2-Б','3-А','3-Б','4-А','4-Б','5-А','5-Б','6-А','6-Б','7-А','7-Б','8-А','8-Б','9-А','9-Б','10-А','10-Б','11-А','11-Б'];
+const BASE_SUBJS=['Математика','Алгебра','Геометрія','Українська мова','Українська література','Англійська мова','Фізика','Хімія','Біологія','Географія','Історія України','Всесвітня історія','Інформатика','Фізкультура','Музика','Образотворче мистецтво','Правознавство','Основи здоров\'я','Трудове навчання'];
+let CLASSES=[...BASE_CLASSES];
+let SUBJS=[...BASE_SUBJS];
+
+async function loadCustomLists(){
+  try{
+    const snap=await db.collection('settings').doc('lists').get();
+    if(snap.exists){
+      const d=snap.data();
+      if(d.classes)CLASSES=[...new Set([...BASE_CLASSES,...d.classes])];
+      if(d.subjects)SUBJS=[...new Set([...BASE_SUBJS,...d.subjects])];
+    }
+  }catch(e){console.log('loadCustomLists',e);}
+}
+
+async function saveCustomClass(cls){
+  try{
+    const snap=await db.collection('settings').doc('lists').get();
+    const existing=snap.exists?(snap.data().classes||[]):[];
+    if(!existing.includes(cls)){
+      existing.push(cls);
+      await db.collection('settings').doc('lists').set({classes:existing},{merge:true});
+      CLASSES=[...new Set([...BASE_CLASSES,...existing])];
+    }
+  }catch(e){}
+}
+
+async function saveCustomSubject(subj){
+  try{
+    const snap=await db.collection('settings').doc('lists').get();
+    const existing=snap.exists?(snap.data().subjects||[]):[];
+    if(!existing.includes(subj)){
+      existing.push(subj);
+      await db.collection('settings').doc('lists').set({subjects:existing},{merge:true});
+      SUBJS=[...new Set([...BASE_SUBJS,...existing])];
+    }
+  }catch(e){}
+}
 const ATT_CYCLE={null:'p',p:'a',a:'s',s:null};
 const ATT_LBL={p:'П',a:'Н',s:'Хв',null:'·'};
 const ATT_CLS={p:'att-p',a:'att-a',s:'att-s',null:''};
@@ -230,6 +267,7 @@ auth.onAuthStateChanged(async user=>{
       const sn=await db.collection('users').doc(user.uid).get();
       if(sn.exists&&sn.data().role==='director'){
         session={role:'director',uid:user.uid,profile:sn.data()};
+        await loadCustomLists();
         showApp(); ld(false); return;
       }
     }catch(e){}
@@ -262,6 +300,7 @@ async function doLogin(){
       if(tdata.active===false){setErr('li-err','Акаунт деактивовано');btn.disabled=false;return;}
       const role=tdata.homeroomClass?'homeroom':'teacher';
       session={role,uid:tid,profile:{...tdata,teacherId:tid,role}};
+      await loadCustomLists();
       showApp();
     }else{
       const sid=(document.getElementById('li-ps').value||'').trim().toUpperCase();
@@ -381,16 +420,28 @@ async function dTeachers(mc){
     </div>
     <div class="sec-lbl">Предмети</div>
     <div class="fx mb8" style="flex-wrap:wrap;gap:8px">
-      <select id="ts-sel" style="width:190px">${SUBJS.map(s=>`<option>${s}</option>`).join('')}</select>
-      <button class="btn btn-gh btn-sm" onclick="addTS()">+ Зі списку</button>
-      <input id="ts-own" placeholder="Свій предмет..." style="width:160px;height:32px">
-      <button class="btn btn-gh btn-sm" onclick="addTSOwn()">+ Свій</button>
+      <select id="ts-sel" style="width:220px" onchange="checkTSOwnSelect(this)">
+        ${SUBJS.map(s=>`<option>${s}</option>`).join('')}
+        <option value="__own__">✏️ Додати свій предмет...</option>
+      </select>
+      <button class="btn btn-gh btn-sm" onclick="addTS()">+ Додати</button>
+      <div id="ts-own-wrap" style="display:none;margin-top:8px" class="fx">
+        <input id="ts-own" placeholder="Назва предмету..." style="flex:1;height:32px">
+        <button class="btn btn-pr btn-sm" onclick="addTSOwn()">✓</button>
+      </div>
     </div>
     <div id="ts-chips" class="fw2 mb12"></div>
     <div class="sec-lbl">Класи де викладає</div>
     <div class="fx mb8">
-      <select id="tc-sel" style="width:100px">${CLASSES.map(c=>`<option>${c}</option>`).join('')}</select>
+      <select id="tc-sel" style="width:120px" onchange="checkTCOwnSelect(this)">
+        ${CLASSES.map(c=>`<option>${c}</option>`).join('')}
+        <option value="__own__">✏️ Свій клас...</option>
+      </select>
       <button class="btn btn-gh btn-sm" onclick="addTC()">+ Клас</button>
+      <div id="tc-own-wrap" style="display:none;margin-top:8px" class="fx">
+        <input id="tc-own" placeholder="напр. 1-В або 2-Г" style="width:120px;height:32px">
+        <button class="btn btn-pr btn-sm" onclick="addTCOwn()">✓</button>
+      </div>
     </div>
     <div id="tc-chips" class="fw2 mb12"></div>
     <div class="sec-lbl">Класний керівник</div>
@@ -421,12 +472,40 @@ async function dTeachers(mc){
   </div></div>`;
 }
 
-function addTS(){const n=document.getElementById('ts-sel').value;if(!tmpS.find(s=>s.name===n)){tmpS.push({id:uid(),name:n});renderTChips();}}
-function addTSOwn(){const i=document.getElementById('ts-own');const n=(i.value||'').trim();if(!n||tmpS.find(s=>s.name===n))return;tmpS.push({id:uid(),name:n});i.value='';renderTChips();}
+function checkTSOwnSelect(sel){
+  const wrap=document.getElementById('ts-own-wrap');
+  if(sel.value==='__own__'){wrap.style.display='flex';document.getElementById('ts-own').focus();}
+  else{wrap.style.display='none';}
+}
+function checkTCOwnSelect(sel){
+  const wrap=document.getElementById('tc-own-wrap');
+  if(sel.value==='__own__'){wrap.style.display='flex';document.getElementById('tc-own').focus();}
+  else{wrap.style.display='none';}
+}
+async function addTCOwn(){
+  const i=document.getElementById('tc-own');
+  const n=(i.value||'').trim();
+  if(!n||tmpC.includes(n))return;
+  await saveCustomClass(n);
+  tmpC.push(n);i.value='';
+  document.getElementById('tc-own-wrap').style.display='none';
+  renderCChips();
+}
+function addTS(){const n=document.getElementById('ts-sel').value;if(n==='__own__')return;if(!tmpS.find(s=>s.name===n)){tmpS.push({id:uid(),name:n});renderTChips();}}
+async function addTSOwn(){
+  const i=document.getElementById('ts-own');
+  const n=(i.value||'').trim();
+  if(!n||tmpS.find(s=>s.name===n))return;
+  await saveCustomSubject(n);
+  tmpS.push({id:uid(),name:n});i.value='';
+  document.getElementById('ts-own-wrap').style.display='none';
+  document.getElementById('ts-sel').value=SUBJS[0];
+  renderTChips();
+}
 function removeTmpS(id){tmpS=tmpS.filter(s=>s.id!==id);renderTChips();}
 function renderTChips(){const e=document.getElementById('ts-chips');if(!e)return;e.innerHTML=tmpS.map(s=>`<span class="tag tgs" style="display:inline-flex;align-items:center;gap:4px">${s.name}<span class="cd" onclick="removeTmpS('${s.id}')">✕</span></span>`).join('');}
 
-function addTC(){const n=document.getElementById('tc-sel').value;if(!tmpC.includes(n)){tmpC.push(n);renderCChips();}}
+function addTC(){const n=document.getElementById('tc-sel').value;if(n==='__own__')return;if(!tmpC.includes(n)){tmpC.push(n);renderCChips();}}
 function removeTmpC(n){tmpC=tmpC.filter(c=>c!==n);renderCChips();}
 function renderCChips(){const e=document.getElementById('tc-chips');if(!e)return;e.innerHTML=tmpC.map(c=>`<span class="cls-chip">${c}<span class="cd" onclick="removeTmpC('${c}')">✕</span></span>`).join('');}
 
